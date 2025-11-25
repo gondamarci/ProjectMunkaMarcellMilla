@@ -1,1 +1,43 @@
+Projekt neve:
+MatchApp
+Csapattagok:
+•	Kónya Milla
+•	Gonda Marcell László
+GitHub repository:
+https://github.com/gondamarci/ProjectMunkaMarcellMilla
+1. Projekt rövid leírása
+A MatchApp egy Tinder-szerű társkereső alkalmazás, amely lehetővé teszi a felhasználók számára, hogy egyszerűen és gyorsan találjanak új ismeretségeket. A felhasználók profilt hozhatnak létre, képeket tölthetnek fel, és jobbra vagy balra húzással jelezhetik, hogy tetszik-e nekik egy másik felhasználó. Ha két felhasználó kölcsönösen „like”-olja egymást, létrejön egy match, és megnyílik a chat lehetőség.
+2. Fő funkciók
+•	Felhasználói regisztráció és bejelentkezés
+•	Profil létrehozása és szerkesztése
+•	Kép feltöltés
+•	Swipe funkció (jobbra = tetszik, balra = nem)
+•	Match rendszer
+•	Chat felület
+•	Adatbázis-kezelés
+•	(Opció) Földrajzi alapú szűrés
+3. Felhasznált technológiák (tervezett)
+•	Frontend: HTML, CSS, JavaScript, vagy React
+•	Backend: javascript
+•	Adatbázis: Nme tudjuk még
+•	Verziókezelés: Git + GitHub
+4. Feladatok felosztása
+•	Kónya Milla:
+o	Nincs még felosztva
+•	Gonda Marcell László:
+o	Nincs még felosztva
+5. Jelenlegi állapot
+•	GitHub repository létrehozva
+•	Projekt alapstruktúra kialakítás alatt
+•	Fő funkciók meghatározva
+•	Következő lépések:
+o	UI tervek elkészítése
+o	Adatbázis kiválasztása és megcsinálása
+6. Következő tervezett lépések
+•	Felhasználói felület készítése
+•	Regisztráció/bejelentkezés működésének megvalósítása
+•	Swipe funkció programozása
+•	Match-logika megírása
+•	Chat rendszer elkészítése
+
 

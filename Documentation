@@ -1,31 +1,27 @@
 Projekt neve:
-MatchApp
+MacroTune
 Csapattagok:
 •	Kónya Milla
 •	Gonda Marcell László
 GitHub repository:
 https://github.com/gondamarci/ProjectMunkaMarcellMilla
 1. Projekt rövid leírása
-A MatchApp egy Tinder-szerű társkereső alkalmazás, amely lehetővé teszi a felhasználók számára, hogy egyszerűen és gyorsan találjanak új ismeretségeket. A felhasználók profilt hozhatnak létre, képeket tölthetnek fel, és jobbra vagy balra húzással jelezhetik, hogy tetszik-e nekik egy másik felhasználó. Ha két felhasználó kölcsönösen „like”-olja egymást, létrejön egy match, és megnyílik a chat lehetőség.
+MacroTune egy intelligens makrókövető és étkezéstervező app, amely segít finomhangolni a napi tápanyagbeviteledet. Az alkalmazás megmutatja, mennyi fehérjét, szénhidrátot és zsírt fogyasztasz, és személyre szabott célokat állít be a fitnesz- vagy fogyási céljaid alapján.
 2. Fő funkciók
 •	Felhasználói regisztráció és bejelentkezés
-•	Profil létrehozása és szerkesztése
-•	Kép feltöltés
-•	Swipe funkció (jobbra = tetszik, balra = nem)
-•	Match rendszer
-•	Chat felület
-•	Adatbázis-kezelés
-•	(Opció) Földrajzi alapú szűrés
+• Receptek elmentése
+• Alapanyagok elmentése
+• Mérhető: makró, kalória, mikrotápanyag, hidratáltság, aktivítás
+• Cél kitűzése
+• Személyreszabott kalória bevitel javaslat
 3. Felhasznált technológiák (tervezett)
 •	Frontend: HTML, CSS, JavaScript, vagy React
-•	Backend: javascript
-•	Adatbázis: Nme tudjuk még
+•	Backend: C#
+•	Adatbázis: 
 •	Verziókezelés: Git + GitHub
 4. Feladatok felosztása
-•	Kónya Milla:
-o	Nincs még felosztva
-•	Gonda Marcell László:
-o	Nincs még felosztva
+•	Kónya Milla: UI, adatbázis
+•	Gonda Marcell László: backend
 5. Jelenlegi állapot
 •	GitHub repository létrehozva
 •	Projekt alapstruktúra kialakítás alatt
@@ -33,11 +29,6 @@ o	Nincs még felosztva
 •	Következő lépések:
 o	UI tervek elkészítése
 o	Adatbázis kiválasztása és megcsinálása
-6. Következő tervezett lépések
-•	Felhasználói felület készítése
-•	Regisztráció/bejelentkezés működésének megvalósítása
-•	Swipe funkció programozása
-•	Match-logika megírása
-•	Chat rendszer elkészítése
+
 
 

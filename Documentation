@@ -1,0 +1,41 @@
+Projekt neve: FitApp
+Csapattagok:
+•	Kónya Milla
+•	Gonda Marcell László
+
+GitHub repository:
+https://github.com/gondamarci/ProjectMunkaMarcellMilla
+
+1. Projekt rövid leírása
+FitApp egy intelligens makrókövető és étkezéstervező app, amely segít finomhangolni a napi tápanyagbeviteledet. Az alkalmazás megmutatja, mennyi fehérjét, szénhidrátot és zsírt fogyasztasz, és személyre szabott célokat állít be a fitnesz- vagy fogyási céljaid alapján.
+
+2. Fő funkciók
+•	Felhasználói regisztráció és bejelentkezés
+• Receptek elmentése
+• Alapanyagok elmentése
+• Mérhető: makró, kalória, mikrotápanyag, hidratáltság, aktivítás
+• Cél kitűzése
+• Személyreszabott kalória bevitel javaslat
+
+3. Felhasznált technológiák (tervezett)
+•	Frontend: HTML, CSS, JavaScript, vagy React
+•	Backend: C#
+•	Adatbázis: 
+•	Verziókezelés: Git + GitHub
+
+4. Feladatok felosztása
+•	Kónya Milla: UI, adatbázis
+•	Gonda Marcell László: backend
+
+5. Jelenlegi állapot
+•	GitHub repository létrehozva
+•	Projekt alapstruktúra kialakítás alatt
+•	Fő funkciók meghatározva
+• Adatbázis terv megcsinálva
+• UI tervek elkészítve
+
+6. Következő lépések:
+• Adatbázis kiválasztása és megcsinálása (laravel)
+
+
+

@@ -28,12 +28,23 @@
         </div>
 
         <div class="nav-auth">
-            <a href="{{ route('login') }}">Bejelentkezés</a>
-            <a href="{{ route('register') }}">Regisztráció</a>
+            @auth
+            <span style="color: black; margin-right: 15px;">Szia, {{ Auth::user()->username }}!</span>
+        
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="logout-button" style="background: #FF8C42; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">
+                Kijelentkezés
+            </button>
+        </form>
+    @else
+        <a href="{{ route('login') }}">Bejelentkezés</a>
+        <a href="{{ route('register') }}">Regisztráció</a>
+    @endauth
         </div>
     </nav>
 
-    <h1>Üdvözlünk a FitApp oldalon, ahol a kalóriák nem menekülhetnek előled</h1>
+    @yield('head.message')
 
     <div class="container">
         @yield('content')

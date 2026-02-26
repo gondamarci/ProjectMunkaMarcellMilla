@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,6 +29,29 @@ class AuthController extends Controller
         return back()->withErrors([
             'email' => 'A megadott adatok nem egyeznek.',
         ])->onlyInput('email');
+    }
+
+    public function register(Request $request)
+    {
+        // 1. Validáció: ellenőrizzük, hogy minden adat megvan-e és jó-e
+        $request->validate([
+            'username' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', 'min:8'], // A 'confirmed' elvár egy password_confirmation mezőt!
+        ]);
+
+        // 2. Felhasználó létrehozása
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password), // Titkosítjuk a jelszót
+        ]);
+
+        // 3. Azonnali beléptetés regisztráció után
+        Auth::login($user);
+
+        // 4. Irány a főoldal
+        return redirect('/')->with('success', 'Sikeres regisztráció!');
     }
 
     // Kijelentkezés

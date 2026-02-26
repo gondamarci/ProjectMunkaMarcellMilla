@@ -28,8 +28,8 @@
         </div>
 
         <div class="nav-auth">
-            <a>Bejelentkezés</a>
-            <a>Regisztráció</a>
+            <a href="{{ route('login') }}">Bejelentkezés</a>
+            <a href="{{ route('register') }}">Regisztráció</a>
         </div>
     </nav>
 

@@ -1,0 +1,101 @@
+html, body {
+    margin:0;
+    padding: 0;
+}
+
+body {
+    background-color: #c8ac96;
+}
+
+a {
+    border: 2px solid  #545454;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: larger;
+    text-decoration: none;
+    color: #506a68;
+}
+
+a:hover {
+    background-color: #506;
+    color: #c8ac96;
+    cursor: pointer;
+}
+
+.like-a-tag{
+    border: 2px solid  #545454;
+    background-color: #c8ac96;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: smaller;
+    text-decoration: none;
+    color: #506a68;
+}
+
+.like-a-tag:hover{
+    border: 2px solid  #545454;
+    background-color: #506;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: smaller;
+    text-decoration: none;
+    color: #506a68;
+}
+
+
+
+/* Navigációs sáv alapstílusa */
+nav {
+    background-color: rgba(255, 255, 255, 0.8); /* Kicsit átlátszó fehér */
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between; /* Ez rakja szét a két oldalra */
+    align-items: center;
+    border-bottom: 2px solid #FF8C42;
+}
+
+/* Linkek csoportosítása */
+.nav-links, .nav-auth {
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #FF8C42;
+}
+
+/* Kilépés gomb stílusa (mivel az egy form) */
+.logout-button {
+    background: none;
+    border: none;
+    color: #333;
+    font-weight: bold;
+            cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+}
+
+.logout-button:hover {
+    color: #FF8C42;
+}
+
+.container {
+    padding: 40px;
+}
+        
+h1 {
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}

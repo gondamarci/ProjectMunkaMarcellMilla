@@ -1,38 +1,40 @@
 @extends('layouts.app')
 
-@section('head.message')
-<h1>Üdvözlünk a FitApp oldalon, ahol a kalóriák nem menekülhetnek előled</h1>
-<p>Köszönjük hogy regisztrál oldalunkra</p>
-@endsection
-
-
-
 @section('content')
+<div class="auth-container">
+    <h2>Regisztráció</h2>
 
-@if ($errors->any())
-    <div style="color: red; border: 1px solid red; padding: 10px; margin-bottom: 20px;">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
 
-<form method="POST" action="/register">
-    @csrf
-    
-    <input type="text" name="username" value="{{ old('username') }}" placeholder="Név">
-    @error('username') <span style="color:red">{{ $message }}</span> @enderror
+        <div class="form-group">
+            <label>Felhasználónév</label>
+            <input type="text" name="username" value="{{ old('username') }}" required>
+            @error('username') <span class="error-text">{{ $message }}</span> @enderror
+        </div>
 
-    <input type="email" name="email" value="{{ old('email') }}" placeholder="Email">
-    @error('email') <span style="color:red">{{ $message }}</span> @enderror
+        <div class="form-group">
+            <label>E-mail cím</label>
+            <input type="email" name="email" value="{{ old('email') }}" required>
+            @error('email') <span class="error-text">{{ $message }}</span> @enderror
+        </div>
 
-    <input type="password" name="password" placeholder="Jelszó">
-    @error('password') <span style="color:red">{{ $message }}</span> @enderror
+        <div class="form-group">
+            <label>Jelszó</label>
+            <input type="password" name="password" required>
+            @error('password') <span class="error-text">{{ $message }}</span> @enderror
+        </div>
 
-    <input type="password" name="password_confirmation" placeholder="Jelszó újra">
-    
-    <button type="submit">Regisztráció</button>
-</form>
+        <div class="form-group">
+            <label>Jelszó újra</label>
+            <input type="password" name="password_confirmation" required>
+        </div>
+
+        <button type="submit" class="submit-btn">Fiók létrehozása</button>
+
+        <div class="auth-footer">
+            Már van fiókod? <a href="{{ route('login') }}">Jelentkezz be!</a>
+        </div>
+    </form>
+</div>
 @endsection

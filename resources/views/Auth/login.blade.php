@@ -1,23 +1,29 @@
 @extends('layouts.app')
 
-@section('head.message')
-<h1>Üdvözlünk ismét a FitApp oldalon, ahol a kalóriák nem menekülhetnek előled</h1>
-@endsection
-
 @section('content')
-    <form action="{{ route('login') }}" method="POST">
-    @csrf
-    <input type="email" name="email" required>
-    <input type="password" name="password" required>
-    <button type="submit">Belépés</button>
+<div class="auth-container">
+    <h2>Bejelentkezés</h2>
 
-    @if ($errors->any())
-        <div style="color: red; margin-top: 10px;">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <form method="POST" action="{{ route('login') }}">
+        @csrf
+
+        <div class="form-group">
+            <label>E-mail cím</label>
+            <input type="email" name="email" value="{{ old('email') }}" required autofocus>
+            @error('email') <span class="error-text">{{ $message }}</span> @enderror
         </div>
-    @endif
+
+        <div class="form-group">
+            <label>Jelszó</label>
+            <input type="password" name="password" required>
+            @error('password') <span class="error-text">{{ $message }}</span> @enderror
+        </div>
+
+        <button type="submit" class="submit-btn">Belépés</button>
+
+        <div class="auth-footer">
+            Nincs még fiókod? <a href="{{ route('register') }}">Regisztrálj itt!</a>
+        </div>
+    </form>
+</div>
 @endsection

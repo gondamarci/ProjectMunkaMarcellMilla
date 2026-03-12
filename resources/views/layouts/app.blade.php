@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,7 +15,7 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
     </style>
 </head>
@@ -24,23 +24,31 @@
     <nav>
         <div class="nav-links">
             <a href="/">Főoldal</a>
-
         </div>
 
         <div class="nav-auth">
             @auth
-            <span style="color: black; margin-right: 15px;">Szia, {{ Auth::user()->username }}!</span>
-        
-            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <button type="submit" class="logout-button" style="background: #FF8C42; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">
-                Kijelentkezés
-            </button>
-        </form>
-    @else
-        <a href="{{ route('login') }}">Bejelentkezés</a>
-        <a href="{{ route('register') }}">Regisztráció</a>
-    @endauth
+                <div class="dropdown">
+                    <span class="dropdown-trigger">
+                        Szia, {{ Auth::user()->username }}! ▼
+                    </span>
+                    <div class="dropdown-content">
+                        <a href="{{ route('profile.edit') }}">
+                            ⚙️ Adatok megadása
+                        </a>
+                        
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="logout-button-inner">
+                                🚪 Kijelentkezés
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <a href="{{ route('login') }}">Bejelentkezés</a>
+                <a href="{{ route('register') }}" style="background: white; color: #D7263D; padding: 8px 15px; border-radius: 5px;">Regisztráció</a>
+            @endauth
         </div>
     </nav>
 

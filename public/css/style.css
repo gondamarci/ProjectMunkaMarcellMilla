@@ -1,107 +1,329 @@
+/* ============================================================
+   1. ALAPBEÁLLÍTÁSOK ÉS TIPOGRÁFIA
+   ============================================================ */
 html, body {
-    margin:0;
+    margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 body {
-    background-color: #c8ac96;
-}
-
-a {
-    border: 2px solid  #545454;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: larger;
-    text-decoration: none;
-    color: #506a68;
-}
-
-a:hover {
-    background-color: #506;
-    color: #c8ac96;
-    cursor: pointer;
-}
-
-.like-a-tag{
-    border: 2px solid  #545454;
-    background-color: #c8ac96;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: smaller;
-    text-decoration: none;
-    color: #506a68;
-}
-
-.like-a-tag:hover{
-    border: 2px solid  #545454;
-    background-color: #506;
-    padding: 10px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: smaller;
-    text-decoration: none;
-    color: #506a68;
-}
-
-
-
-/* Navigációs sáv alapstílusa */
-nav {
-    background-color: rgba(255, 255, 255, 0.8); /* Kicsit átlátszó fehér */
-    padding: 15px 30px;
-    display: flex;
-    justify-content: space-between; /* Ez rakja szét a két oldalra */
-    align-items: center;
-    border-bottom: 2px solid #FF8C42;
-}
-
-/* Linkek csoportosítása */
-.nav-links, .nav-auth {
-    display: flex;
-    gap: 20px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-nav a:hover {
-    color: #FF8C42;
-}
-
-/* Kilépés gomb stílusa (mivel az egy form) */
-.logout-button {
-    background: none;
-    border: none;
-    color: #333;
-    font-weight: bold;
-            cursor: pointer;
-    font-family: inherit;
-    font-size: inherit;
-    padding: 0;
-}
-
-.logout-button:hover {
-    color: #FF8C42;
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
 }
 
 .container {
-    padding: 40px;
+    padding: 100px 40px 40px; /* Felső padding a fix nav miatt */
+    max-width: 1200px;
+    margin: 0 auto;
 }
-        
-h1 {
-    text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+
+h1, h2, h3 {
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
 p {
-    text-align: center;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 }
+
+/* ============================================================
+   2. NAVIGÁCIÓ ÉS DROPDOWN
+   ============================================================ */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, #FF8C42 0%, #D7263D 100%);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 1100;
+}
+
+
+.nav-links a, .nav-auth a {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none !important; 
+    transition: all 0.3s ease; 
+}
+
+.nav-links a:hover {
+    opacity: 0.8;
+}
+
+
+.nav-auth a[href*="register"] {
+    background: rgba(255, 255, 255, 0.1); 
+    padding: 8px 18px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.4s ease; 
+}
+
+
+.nav-auth a[href*="register"]:hover {
+    background: #FFD580; 
+    color: #E85D04 !important; 
+    box-shadow: 0 0 15px rgba(255, 172, 113, 0.6); 
+    border-color: #FFB347;
+    transform: translateY(-2px); 
+    opacity: 1;
+}
+
+/* Dropdown mechanika */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-trigger {
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 8px 15px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    transition: background 0.3s;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 220px;
+    box-shadow: 0px 8px 25px rgba(0,0,0,0.2);
+    border-radius: 12px;
+    z-index: 1000;
+    margin-top: 0; 
+    border-top: 10px solid transparent; 
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a, .dropdown-content button {
+    color: #333 !important;
+    padding: 12px 20px;
+    display: block;
+    font-weight: 600;
+    text-align: left;
+    width: 100%;
+    border: none;
+    background: none;
+    font-size: 15px;
+    transition: background 0.2s;
+}
+
+.dropdown-content a:hover, .dropdown-content button:hover {
+    background-color: #fff5f0;
+    color: #FF8C42 !important;
+}
+
+.logout-button-inner {
+    border-top: 1px solid #eee !important;
+    color: #D7263D !important;
+}
+
+/* ============================================================
+   3. HERO SZEKCIÓ ÉS ÜDVÖZLŐ OLDAL
+   ============================================================ */
+.hero-section {
+    text-align: center;
+    padding: 60px 20px;
+    color: white;
+}
+
+.hero-section h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-section p {
+    font-size: 1.4rem;
+    max-width: 800px;
+    margin: 0 auto 40px;
+}
+
+/* Információs kártyák */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.info-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    border-bottom: 5px solid #FF8C42;
+}
+
+.info-card:hover {
+    transform: translateY(-10px);
+}
+
+.info-card i {
+    font-size: 50px;
+    color: #D7263D;
+    margin-bottom: 20px;
+    display: block;
+    font-style: normal;
+}
+
+.info-card h3 {
+    color: #333;
+    margin-bottom: 15px;
+    text-shadow: none;
+}
+
+.info-card p {
+    color: #666;
+    text-shadow: none;
+    font-size: 1rem;
+}
+
+.stats-bar {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    margin-top: 80px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* ============================================================
+   4. FORMOK ÉS AUTH (LOGIN/REGISTER)
+   ============================================================ */
+.auth-container {
+    max-width: 400px;
+    margin: 40px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(255, 140, 66, 0.2);
+    border-top: 6px solid #FF8C42;
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #D7263D;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-shadow: none;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #444;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"],
+input[type="number"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #fff0e5;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #fffaf8;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #FF8C42;
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(255, 140, 66, 0.2);
+}
+
+.error-text {
+    color: #D7263D;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 5px;
+    display: block;
+}
+
+/* ============================================================
+   5. GOMBOK ÉS ANIMÁCIÓK
+   ============================================================ */
+.cta-button {
+    display: inline-block;
+    background: linear-gradient(135deg, #FF8C42 0%, #D7263D 100%);
+    color: white;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    box-shadow: 0 5px 20px rgba(215, 38, 61, 0.4);
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+    color: white;
+}
+
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #FFAC71 0%, #FF8C42 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    transition: color 0.4s ease;
+    box-shadow: 0 4px 15px rgba(255, 140, 66, 0.3);
+}
+
+.submit-btn::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #D7263D 0%, #A61D30 100%);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.submit-btn:hover {
+    box-shadow: 0 6px 20px rgba(215, 38, 61, 0.4);
+    transform: translateY(-2px);
+}
+
+.submit-btn:hover::before {
+    opacity: 1;
+}
+

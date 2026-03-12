@@ -45,19 +45,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function Personal_data(){
-        return $this->hasOne(Personaldata::class, 'userId');
-    }
+    public function personalData(){
+        return $this->hasOne(PersonalData::class, 'userId');
+}
 
-    public function Weight_log(){
+    public function Weightlog(){
         return $this->hasMany(Weightlog::class, 'userId');
     }
 
-    public function Food_log(){
+    public function Foodlog(){
         return $this->hasMany(Foodlog::class, 'userId');
     }
 
-    public function Daily_calories(){
+    public function Dailycalories(){
         return $this->hasMany(Dailycalorie::class, 'userId');
     }
 

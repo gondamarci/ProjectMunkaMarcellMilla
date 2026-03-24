@@ -2,65 +2,182 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Daily_calorie;
-use App\Http\Requests\StoreDaily_calorieRequest;
-use App\Http\Requests\UpdateDaily_calorieRequest;
+use App\Models\{Daily_calorie, Exercise, Food, Foodlog};
+use App\Http\Requests\{StoreDaily_calorieRequest, UpdateDaily_calorieRequest};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class DailyCalorieController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Főoldal: Napi statisztikák megjelenítése
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $data = $user->personalData;
+        $today = Carbon::today()->toDateString();
+
+        if (!$data) {
+            return redirect()->route('profile.edit');
+        }
+
+        // 1. Edzések és ételek lekérése
+        $eledzett = $user->exercises()->where('date', $today)->sum('kcal_burned');
+        $consumedToday = Foodlog::where('userId', $user->id)
+            ->where('date', $today)
+            ->with('food')
+            ->get();
+
+        // 2. Tápanyagok összesítése (Collection használatával, ciklus helyett)
+        $totals = $consumedToday->reduce(function ($carry, $log) {
+            $ratio = $log->quantity / 100;
+            $carry['kcal'] += $log->food->calories * $ratio;
+            $carry['protein'] += $log->food->protein * $ratio;
+            $carry['carb'] += $log->food->carb * $ratio;
+            $carry['fat'] += $log->food->fat * $ratio;
+            return $carry;
+        }, ['kcal' => 0, 'protein' => 0, 'carb' => 0, 'fat' => 0]);
+
+        // 3. BMR és limit kiszámítása (kiszervezett metódus)
+        $napiLimit = $this->calculateDailyLimit($data);
+        $kor = Carbon::parse($data->birthDate)->age;
+
+        return view('pages.DailyCalories', [
+            'data'             => $data,
+            'napiLimit'        => $napiLimit,
+            'kor'              => $kor,
+            'eledzett'         => $eledzett,
+            'elfogyasztott'    => $totals['kcal'],
+            'osszFeherje'      => $totals['protein'],
+            'osszSzenhidrat'   => $totals['carb'],
+            'osszZsir'         => $totals['fat'],
+            'foods'            => Food::all(),
+            'consumedToday'    => $consumedToday
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Étel naplózása
      */
-    public function create()
+    public function storeFoodLog(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'food_id' => 'required|exists:food,id',
+            'amount'  => 'required|numeric|min:1',
+        ]);
+
+        Foodlog::create([
+            'userId'   => Auth::id(),
+            'foodId'   => $validated['food_id'], 
+            'quantity' => $validated['amount'], 
+            'date'     => Carbon::today(),
+        ]);
+
+        return back()->with('success', 'Étel rögzítve!');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Gyors étel rögzítése (nem létező ételhez)
      */
-    public function store(StoreDaily_calorieRequest $request)
+    public function quickStore(Request $request)
     {
-        //
+        $request->validate([
+            'quick_name' => 'required|string|max:255',
+            'quick_kcal' => 'required|numeric|min:1',
+        ]);
+
+        $newFood = Food::create([
+            'foodname' => $request->quick_name . ' (Gyors)',
+            'calories' => 100, 
+            'protein'  => 0, 'carb' => 0, 'fat' => 0, 'fiber' => 0
+        ]);
+
+        Foodlog::create([
+            'userId'   => Auth::id(),
+            'foodId'   => $newFood->id,
+            'quantity' => $request->quick_kcal, 
+            'date'     => Carbon::today(),
+        ]);
+
+        return back()->with('success', 'Gyors étel rögzítve!');
     }
 
     /**
-     * Display the specified resource.
+     * Edzés rögzítése
      */
-    public function show(Daily_calorie $daily_calorie)
+    public function storeExercise(Request $request)
     {
-        //
+        $request->validate([
+            'exercise_type' => 'required|string',
+            'duration'      => 'required|numeric|min:1',
+        ]);
+
+        $factors = ['walk' => 4, 'run' => 10, 'gym' => 6, 'swim' => 8, 'bike' => 7];
+        $kcalPerMinute = $factors[$request->exercise_type] ?? 5;
+
+        Exercise::create([
+            'user_id'       => Auth::id(),
+            'exercise_type' => $request->exercise_type,
+            'duration'      => $request->duration,
+            'kcal_burned'   => $request->duration * $kcalPerMinute,
+            'date'          => Carbon::today(),
+        ]);
+
+        return back()->with('success', 'Edzés elmentve!');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Előzmények megjelenítése
      */
-    public function edit(Daily_calorie $daily_calorie)
+    public function history()
     {
-        //
+        $user = Auth::user();
+        $napiLimit = $this->calculateDailyLimit($user->personalData);
+
+        $groupedExercises = $user->exercises()->latest('date')->get()->groupBy('date');
+        $groupedFoods = Foodlog::where('userId', $user->id)
+            ->with('food')
+            ->latest('date')
+            ->get()
+            ->groupBy('date');
+
+        $allDates = $groupedExercises->keys()
+            ->merge($groupedFoods->keys())
+            ->unique()
+            ->sortDesc();
+
+        return view('pages.History', compact('allDates', 'groupedExercises', 'groupedFoods', 'napiLimit'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Törlések
      */
-    public function update(UpdateDaily_calorieRequest $request, Daily_calorie $daily_calorie)
+    public function destroyFoodLog($id)
     {
-        //
+        Foodlog::where('userId', Auth::id())->findOrFail($id)->delete();
+        return back()->with('success', 'Étel törölve!');
+    }
+
+    public function destroyExercise($id)
+    {
+        Exercise::where('user_id', Auth::id())->findOrFail($id)->delete();
+        return back()->with('success', 'Edzés törölve!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * SEGÉDFÜGGVÉNY: BMR és Napi limit kiszámítása
      */
-    public function destroy(Daily_calorie $daily_calorie)
+    private function calculateDailyLimit($data)
     {
-        //
+        if (!$data) return 2000; // Alapértelmezett, ha nincs adat
+
+        $kor = Carbon::parse($data->birthDate)->age;
+        
+        $bmr = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
+        $bmr += ($data->gender === 'male') ? 5 : -161;
+
+        return round($bmr * (float)$data->lifestyle);
     }
 }

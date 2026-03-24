@@ -8,20 +8,18 @@ use App\Models\PersonalData;
 
 class UserController extends Controller
 {
-    // Oldal megjelenítése (GET)
+    /* Oldal megjelenítése (GET) */
     public function edit()
     {
         $user = Auth::user();
-        // Lekérjük a meglévő adatokat, ha már vannak
         $data = $user->personalData; 
 
         return view('pages.edit', compact('data'));
     }
 
-    // Adatok mentése a personal_data táblába (POST)
+    /* Adatok mentése a personal_data táblába (POST) */
     public function update(Request $request)
     {
-        // 1. Validáció - minden mezőt ellenőrzünk
         $request->validate([
             'birthDate' => 'required|date',
             'gender'    => 'required|in:male,female',
@@ -32,12 +30,10 @@ class UserController extends Controller
 
         $user = Auth::user();
 
-        // 2. Mentés a kapcsolaton keresztül
-        // Ez automatikusan beállítja a user_id-t is!
         PersonalData::updateOrCreate(
-            ['userId' => Auth::id()], // JAVÍTVA: nagy I betűre!
+            ['userId' => Auth::id()], 
             [
-                'userId'    => Auth::id(), // Itt is nagy I
+                'userId'    => Auth::id(), 
                 'birthDate' => $request->birthDate,
                 'gender'    => $request->gender,
                 'height'    => $request->height,

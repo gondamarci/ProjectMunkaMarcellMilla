@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+
+
 @section('content')
 
 
@@ -7,11 +9,21 @@
     <h1>Vedd át az irányítást a tested felett!</h1>
     <p>A FitApp segítségével nem csak számolod a kalóriákat, hanem megérted, hogyan működik a szervezeted. Érd el a céljaidat tudatosan!</p>
     
-    @guest
-        <a href="{{ route('register') }}" class="cta-button">Vágj bele most ingyen!</a>
+    @auth
+    @if(Auth::user()->personalData)
+        <a href="{{ route('calories.index') }}" class="btn-primary">
+            Irány a kalóriaszámítás! 🍎
+        </a>
     @else
-        <a href="{{ route('profile.edit') }}" class="cta-button">Frissítsd az adataidat!</a>
-    @endguest
+        <a href="{{ route('profile.edit') }}" class="btn-primary">
+            Frissítsd az adataidat a kezdéshez! ✏️
+        </a>
+    @endif
+    @else
+        <a href="{{ route('login') }}" class="btn-primary">
+            Jelentkezz be!
+        </a>
+    @endauth
 
     <div class="info-grid">
         <div class="info-card">

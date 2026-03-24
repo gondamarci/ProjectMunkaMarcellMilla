@@ -3,64 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Models\Food;
-use App\Http\Requests\StoreFoodRequest;
-use App\Http\Requests\UpdateFoodRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Ételek listázása ABC sorrendben
      */
     public function index()
     {
-        //
+        $foods = Food::orderBy('foodname', 'asc')->get();
+        return view('pages.food_list', compact('foods'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Új étel rögzítése az adatbázisba
      */
-    public function create()
+    public function store(Request $request)
     {
-        //
+        $validated = $this->validateFood($request);
+
+        Food::create($validated);
+        return redirect()->back()->with('success', '✅ Étel sikeresen hozzáadva az adatbázishoz!');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Meglévő étel frissítése
      */
-    public function store(StoreFoodRequest $request)
+    public function update(Request $request, $id)
     {
-        //
+        $validated = $this->validateFood($request);
+
+        $food = Food::findOrFail($id);
+        $food->update($validated);
+        return redirect()->back()->with('success', '🔄 Étel sikeresen frissítve!');
     }
 
     /**
-     * Display the specified resource.
+     * Étel törlése
      */
-    public function show(Food $food)
+    public function destroy($id)
     {
-        //
+        $food = Food::findOrFail($id);
+        $food->delete(); // Soft delete-et használ, ha a modellben be van állítva
+        return redirect()->back()->with('success', '🗑️ Étel törölve!');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * SEGÉDFÜGGVÉNY: Étel adatok validálása
+     * Ezt hívja meg a store és az update is, így nem kell kétszer leírni ugyanazt.
      */
-    public function edit(Food $food)
+    private function validateFood(Request $request)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateFoodRequest $request, Food $food)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Food $food)
-    {
-        //
+        return $request->validate([
+            'foodname' => 'required|string|max:255',
+            'calories' => 'required|numeric|min:0',
+            'protein'  => 'required|numeric|min:0',
+            'carb'     => 'required|numeric|min:0',
+            'fat'      => 'required|numeric|min:0',
+            'fiber'    => 'required|numeric|min:0',
+        ]);
     }
 }

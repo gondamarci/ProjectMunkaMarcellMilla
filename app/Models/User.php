@@ -61,4 +61,9 @@ class User extends Authenticatable
         return $this->hasMany(Dailycalorie::class, 'userId');
     }
 
+    public function exercises()
+{
+    return $this->hasMany(Exercise::class, 'user_id');
+}
+
 }

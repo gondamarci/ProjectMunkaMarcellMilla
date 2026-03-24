@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FitApp</title>
-
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <style>
@@ -24,6 +23,23 @@
     <nav>
         <div class="nav-links">
             <a href="/">Főoldal</a>
+        @auth
+            {{-- Ha van már megadott személyes adata --}}
+            @if(Auth::user()->personalData)
+                <a href="{{ route('calories.index') }}" class="btn-primary">
+                    Kalóriaszámítás
+                </a>
+                
+                {{-- Ide kerül az új Előzmények gomb --}}
+                <a href="{{ route('calories.history') }}" class="btn-primary" style="background: linear-gradient(135deg, #666, #444);">
+                    Előzmények
+                </a>
+                {{-- 3. ÚJ: Étel Adatbázis gomb (kékebb vagy zöldebb tónus, hogy elváljon) --}}
+                <a href="{{ route('food.index') }}" class="btn-primary" style="background: linear-gradient(135deg, #4A90E2, #357ABD);">
+                    Étel Adatbázis
+                </a>
+            @endif
+        @endauth
         </div>
 
         <div class="nav-auth">

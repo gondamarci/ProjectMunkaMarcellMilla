@@ -3,64 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Models\Personal_data;
-use App\Http\Requests\StorePersonal_dataRequest;
-use App\Http\Requests\UpdatePersonal_dataRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PersonalDataController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    /* PROFIL SZERKESZTŐ OLDAL */
+    public function edit()
     {
-        //
+
+        $data = Auth::user()->personalData; 
+
+        return view('pages.edit', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    /* ADATOK MENTÉSE VAGY FRISSÍTÉSE */
+    public function update(Request $request)
     {
-        //
-    }
+        $validated = $request->validate([
+            'birthDate' => 'required|date',
+            'gender'    => 'required|in:male,female',
+            'height'    => 'required|numeric|min:50|max:250',
+            'weight'    => 'required|numeric|min:20|max:500',
+            'lifestyle' => 'required|numeric',
+        ]);
+    
+        Auth::user()->personalData()->updateOrCreate(
+            ['userId' => Auth::id()], 
+            $validated                
+        );
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StorePersonal_dataRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Personal_data $personal_data)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Personal_data $personal_data)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePersonal_dataRequest $request, Personal_data $personal_data)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Personal_data $personal_data)
-    {
-        //
+        return back()->with('success', '✅ Adataidat sikeresen mentettük!');
+        
     }
 }

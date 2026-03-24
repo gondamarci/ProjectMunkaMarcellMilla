@@ -4,13 +4,24 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Food extends Model
 {
     /** @use HasFactory<\Database\Factories\FoodFactory> */
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    public function Foodlog(){
+    protected $fillable = [
+        'foodname',
+        'calories',
+        'protein',
+        'carb',
+        'fat',
+        'fiber',
+    ];
+
+     public function Foodlog(){
         return $this->hasMany(Foodlog::class, 'foodId');
     }
+
 }

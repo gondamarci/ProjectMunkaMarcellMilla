@@ -51,12 +51,22 @@ nav {
     font-size: 16px;
     text-decoration: none !important; 
     transition: all 0.3s ease; 
+    
 }
 
 .nav-links a:hover {
     opacity: 0.8;
 }
 
+.btn-primary {
+    background: linear-gradient(135deg, #46230e 0%, #D7263D 100%);
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(215, 38, 61, 0.2);
+}
 
 .nav-auth a[href*="register"] {
     background: rgba(255, 255, 255, 0.1); 

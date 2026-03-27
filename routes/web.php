@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes
+| Publikus útvonalak
 |--------------------------------------------------------------------------
 */
 Route::view('/', 'pages.welcome');
@@ -24,7 +24,7 @@ Route::controller(AuthController::class)->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Authenticated Routes
+| Autentikációt igénylő útvonalak
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [FoodController::class, 'destroy'])->name('destroy');
     });
 
-    // Kalória és Napló kezelés
+    // Kalória és Napló kezelésS
     Route::controller(DailyCalorieController::class)->group(function () {
         Route::get('/calories', 'index')->name('calories.index');
         Route::get('/history', 'history')->name('calories.history');

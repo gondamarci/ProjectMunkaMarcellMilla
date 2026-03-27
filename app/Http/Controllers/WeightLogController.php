@@ -5,62 +5,57 @@ namespace App\Http\Controllers;
 use App\Models\Weight_log;
 use App\Http\Requests\StoreWeight_logRequest;
 use App\Http\Requests\UpdateWeight_logRequest;
+use Auth;
+use Carbon\Carbon;
 
 class WeightLogController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+    public static function currentWeight()
+        {
+            $user = Auth::user();
+            if (!$user || !$user->personalData) return '0';
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+            $data = $user->personalData;
+            
+            // Tegnapi eredmény rögzítése, ha még nem történt meg 
+            $today = now()->format('Y-m-d');
+            $lastUpdate = $data->updated_at->format('Y-m-d');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreWeight_logRequest $request)
-    {
-        //
-    }
+            if ($lastUpdate < $today) {
+                $yesterday = now()->subDay()->format('Y-m-d');
+                $yesterdayIn = $user->foodLogs()->whereDate('date', $yesterday)->get()->sum(function($log) {
+                    return ($log->food->calories / 100) * $log->quantity;
+                });
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Weight_log $weight_log)
-    {
-        //
-    }
+                $kor = Carbon::parse($data->birthDate)->age;
+                $bmr = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
+                $bmr += ($data->gender === 'male' || $data->gender === 'férfi') ? 5 : -161;
+                $tdeeTotal = $bmr * (float)$data->lifestyle;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Weight_log $weight_log)
-    {
-        //
-    }
+                $yesterdayDiff = ($yesterdayIn - $tdeeTotal) / 7700;
+                
+                $data->weight = round($data->weight + $yesterdayDiff, 2);
+                $data->save(); 
+            }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateWeight_logRequest $request, Weight_log $weight_log)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Weight_log $weight_log)
-    {
-        //
-    }
+            // AZNAPI MOZGÁS KÖVETÉSE 
+            $caloriesIn = $user->Foodlog()->whereDate('date', now())->get()->sum(function($log) {
+                return ($log->food->calories / 100) * $log->quantity;
+            });
+
+            // A mai TDEE-t a frissített súly alapján
+            $kor = Carbon::parse($data->birthDate)->age;
+            $bmrToday = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
+            $bmrToday += ($data->gender === 'male' || $data->gender === 'férfi') ? 5 : -161;
+            $tdeeToday = $bmrToday * (float)$data->lifestyle;
+
+            // Időarányos égetés (mennyi égett el éjféltől mostanáig)
+            $passedTimeFactor = now()->diffInMinutes(now()->startOfDay()) / 1440; 
+            $burnedSoFar = $tdeeToday * $passedTimeFactor;
+
+            $diff = ($caloriesIn - $burnedSoFar) / 7700;
+
+            return round($data->weight + $diff, 2);
+        }
 }

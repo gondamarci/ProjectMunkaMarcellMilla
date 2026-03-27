@@ -44,6 +44,9 @@
 
         <div class="nav-auth">
             @auth
+                <span class="nav-link" style="color: #FF8C42; font-weight: bold;">
+    ⚖️ {{ \App\Http\Controllers\WeightLogController::currentWeight() }} kg
+</span>
                 <div class="dropdown">
                     <span class="dropdown-trigger">
                         Szia, {{ Auth::user()->username }}! ▼

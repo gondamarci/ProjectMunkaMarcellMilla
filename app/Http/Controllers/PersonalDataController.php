@@ -27,6 +27,7 @@ class PersonalDataController extends Controller
             'height'    => 'required|numeric|min:50|max:250',
             'weight'    => 'required|numeric|min:20|max:500',
             'lifestyle' => 'required|numeric',
+            'goalWeight' => 'required|numeric',
         ]);
     
         Auth::user()->personalData()->updateOrCreate(

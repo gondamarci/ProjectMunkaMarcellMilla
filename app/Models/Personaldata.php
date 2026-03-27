@@ -19,7 +19,8 @@ class Personaldata extends Model
     'weight',
     'lifestyle',
     'birthDate',
-    'gender'
+    'gender',
+    'goalWeight'
 ];
 
     public function User(){

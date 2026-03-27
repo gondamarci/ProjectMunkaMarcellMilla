@@ -1,7 +1,8 @@
 @extends('layouts.app')
-
+ 
 @section('content')
 @php
+    //kördiagram számítása
     $beitt = $elfogyasztott ?? 0;
     $mozgott = $eledzett ?? 0;
     $aktualis = $beitt - $mozgott;

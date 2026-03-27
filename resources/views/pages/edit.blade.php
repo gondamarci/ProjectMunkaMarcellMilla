@@ -160,6 +160,11 @@
                 <option value="1.725" {{ ($data->lifestyle ?? '') == '1.725' ? 'selected' : '' }}>Nagyon aktív (napi edzés)</option>
             </select>
         </div>
+        
+         <div class="form-group">
+            <label>Cél súly (kg):</label>
+            <input type="number" name="goalWeight" value="{{ $data->goalWeight ?? '' }}" placeholder="pl. 80" required>
+        </div>
 
         <button type="submit" class="submit-btn">
             Adatok frissítése

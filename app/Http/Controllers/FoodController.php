@@ -46,7 +46,7 @@ class FoodController extends Controller
     public function destroy($id)
     {
         $food = Food::findOrFail($id);
-        $food->delete(); // Soft delete-et használ, ha a modellben be van állítva
+        $food->delete(); 
         return redirect()->back()->with('success', '🗑️ Étel törölve!');
     }
 

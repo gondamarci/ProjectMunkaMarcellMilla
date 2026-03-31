@@ -14,7 +14,7 @@ class FoodSeeder extends Seeder
     public function run(): void
     {
         Food::insert(
-                [
+                [                    
                     // Sertéshúsok (100g)
                     ['foodname' => 'Sertés szűzpecsenye', 'calories' => 143, 'protein' => 21.0, 'carb' => 0.0, 'fat' => 6.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Sertéscomb', 'calories' => 160, 'protein' => 21.0, 'carb' => 0.0, 'fat' => 8.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],

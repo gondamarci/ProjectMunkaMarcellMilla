@@ -70,7 +70,7 @@ class FoodSeeder extends Seeder
                     ['foodname' => 'Tej (1,5%-os)', 'calories' => 44, 'protein' => 3.4, 'carb' => 4.7, 'fat' => 1.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Tej (2,8%-os)', 'calories' => 56, 'protein' => 3.3, 'carb' => 4.6, 'fat' => 2.8, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Habtejszín (30%-os)', 'calories' => 292, 'protein' => 2.3, 'carb' => 3.1, 'fat' => 30.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'Tejföl (12%-os)', 'calories' => 134, 'protein' => 3.3, 'carb' => 3.9, 'fat' => 12.0, 'fiber' => 0.0, 'created_at' => now(),('updated_at') = > now()],
+                    ['foodname' => 'Tejföl (12%-os)', 'calories' => 134, 'protein' => 3.3, 'carb' => 3.9, 'fat' => 12.0, 'fiber' => 0.0, 'created_at' => now(),('updated_at') => now()],
                     ['foodname' => 'Kefir', 'calories' => 46, 'protein' => 3.2, 'carb' => 4.4, 'fat' => 1.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Mozzarella sajt', 'calories' => 280, 'protein' => 22.0, 'carb' => 2.2, 'fat' => 20.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Feta sajt', 'calories' => 264, 'protein' => 14.0, 'carb' => 4.1, 'fat' => 21.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],

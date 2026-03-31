@@ -23,7 +23,7 @@ class WeightLogController extends Controller
 
             if ($lastUpdate < $today) {
                 $yesterday = now()->subDay()->format('Y-m-d');
-                $yesterdayIn = $user->foodLogs()->whereDate('date', $yesterday)->get()->sum(function($log) {
+                $yesterdayIn = $user->Foodlog()->whereDate('date', $yesterday)->get()->sum(function($log) {
                     return ($log->food->calories / 100) * $log->quantity;
                 });
 

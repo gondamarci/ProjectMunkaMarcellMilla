@@ -22,21 +22,27 @@ class WeightLogController extends Controller
             $lastUpdate = $data->updated_at->format('Y-m-d');
 
             if ($lastUpdate < $today) {
-                $yesterday = now()->subDay()->format('Y-m-d');
-                $yesterdayIn = $user->Foodlog()->whereDate('date', $yesterday)->get()->sum(function($log) {
-                    return ($log->food->calories / 100) * $log->quantity;
-                });
+            $yesterday = now()->subDay()->format('Y-m-d');
+            
+            // Tegnapi kalóriák lekérése
+            $yesterdayIn = $user->Foodlog()->whereDate('date', $yesterday)->get()->sum(function($log) {
+                return ($log->food->calories / 100) * $log->quantity;
+            });
 
+            // Csak akkor számít a tegnapi eredmény, ha nem 0 a tegnapi bevitel (így nem írja felül a súlyt, ha nem evett tegnap)
+            if ($yesterdayIn > 0) {
                 $kor = Carbon::parse($data->birthDate)->age;
                 $bmr = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
                 $bmr += ($data->gender === 'male' || $data->gender === 'férfi') ? 5 : -161;
                 $tdeeTotal = $bmr * (float)$data->lifestyle;
 
                 $yesterdayDiff = ($yesterdayIn - $tdeeTotal) / 7700;
-                
                 $data->weight = round($data->weight + $yesterdayDiff, 2);
-                $data->save(); 
             }
+            
+            $data->touch();
+            $data->save(); 
+        }
 
 
             // AZNAPI MOZGÁS KÖVETÉSE 

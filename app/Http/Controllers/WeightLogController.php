@@ -45,7 +45,7 @@ class WeightLogController extends Controller
         }
 
 
-            // AZNAPI MOZGÁS KÖVETÉSE 
+            // Aznapi mozgás rögzítése 
             $caloriesIn = $user->Foodlog()->whereDate('date', now())->get()->sum(function($log) {
                 return ($log->food->calories / 100) * $log->quantity;
             });

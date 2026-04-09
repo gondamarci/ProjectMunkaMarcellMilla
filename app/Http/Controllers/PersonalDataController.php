@@ -9,16 +9,15 @@ use Illuminate\Support\Facades\Log;
 
 class PersonalDataController extends Controller
 {
-    /* PROFIL SZERKESZTŐ OLDAL */
+    // Profil szerkesztő oldal
     public function edit()
     {
-
         $data = Auth::user()->personalData; 
 
         return view('pages.edit', compact('data'));
     }
 
-    /* ADATOK MENTÉSE VAGY FRISSÍTÉSE */
+    //Adatok mentése vagy frissítése
     public function update(Request $request)
     {
         $validated = $request->validate([

@@ -8,18 +8,18 @@ use Illuminate\Support\Facades\Log;
 
 class FoodController extends Controller
 {
-    /**
-     * Ételek listázása ABC sorrendben
-     */
+    
+    //Ételek listázása ABC sorrendben
+    
     public function index()
     {
         $foods = Food::orderBy('foodname', 'asc')->get();
         return view('pages.food_list', compact('foods'));
     }
 
-    /**
-     * Új étel rögzítése az adatbázisba
-     */
+    
+    //Új étel rögzítése az adatbázisba
+    
     public function store(Request $request)
     {
         $validated = $this->validateFood($request);
@@ -28,9 +28,8 @@ class FoodController extends Controller
         return redirect()->back()->with('success', '✅ Étel sikeresen hozzáadva az adatbázishoz!');
     }
 
-    /**
-     * Meglévő étel frissítése
-     */
+    
+    //Meglévő étel frissítése
     public function update(Request $request, $id)
     {
         $validated = $this->validateFood($request);
@@ -40,9 +39,7 @@ class FoodController extends Controller
         return redirect()->back()->with('success', '🔄 Étel sikeresen frissítve!');
     }
 
-    /**
-     * Étel törlése
-     */
+    //Étel törlése
     public function destroy($id)
     {
         $food = Food::findOrFail($id);
@@ -50,10 +47,8 @@ class FoodController extends Controller
         return redirect()->back()->with('success', '🗑️ Étel törölve!');
     }
 
-    /**
-     * SEGÉDFÜGGVÉNY: Étel adatok validálása
-     * Ezt hívja meg a store és az update is, így nem kell kétszer leírni ugyanazt.
-     */
+    
+    //segédfüggvény: Étel adatok validálása
     private function validateFood(Request $request)
     {
         return $request->validate([

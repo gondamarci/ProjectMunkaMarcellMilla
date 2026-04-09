@@ -10,27 +10,31 @@ use Carbon\Carbon;
 
 class DailyCalorieController extends Controller
 {
-    /**
-     * Főoldal: Napi statisztikák megjelenítése
-     */
+    
+    // Főoldal: Napi statisztikák megjelenítése 
     public function index()
     {
+
+        // Hitelesítés ellenőrzése
         $user = Auth::user();
         $data = $user->personalData;
         $today = Carbon::today()->toDateString();
 
+        // Ha nincs kitöltve a személyes adat, akkor átirányítjuk a profil szerkesztő oldalra
         if (!$data) {
             return redirect()->route('profile.edit');
         }
 
-        // 1. Edzések és ételek lekérése
+        // Edzések és ételek lekérése
         $eledzett = $user->exercises()->where('date', $today)->sum('kcal_burned');
+
+        //Mai étkezések lekérése
         $consumedToday = Foodlog::where('userId', $user->id)
             ->where('date', $today)
             ->with('food')
             ->get();
 
-        // 2. Tápanyagok összesítése (Collection használatával, ciklus helyett)
+        // Tápanyagok összesítése (Collection használatával, ciklus helyett)
         $totals = $consumedToday->reduce(function ($carry, $log) {
             $ratio = $log->quantity / 100;
             $carry['kcal'] += $log->food->calories * $ratio;
@@ -40,7 +44,7 @@ class DailyCalorieController extends Controller
             return $carry;
         }, ['kcal' => 0, 'protein' => 0, 'carb' => 0, 'fat' => 0]);
 
-        // 3. BMR és limit kiszámítása (kiszervezett metódus)
+        // BMR és limit kiszámítása (kiszervezett metódus)
         $napiLimit = $this->calculateDailyLimit($data);
         $kor = Carbon::parse($data->birthDate)->age;
 
@@ -58,16 +62,16 @@ class DailyCalorieController extends Controller
         ]);
     }
 
-    /**
-     * Étel naplózása
-     */
+    //Étel naplózása
     public function storeFoodLog(Request $request)
     {
+        // Validálás
         $validated = $request->validate([
             'food_id' => 'required|exists:food,id',
             'amount'  => 'required|numeric|min:1',
         ]);
 
+        //Étel létrehozása
         Foodlog::create([
             'userId'   => Auth::id(),
             'foodId'   => $validated['food_id'], 
@@ -78,9 +82,8 @@ class DailyCalorieController extends Controller
         return back()->with('success', 'Étel rögzítve!');
     }
 
-    /**
-     * Gyors étel rögzítése (nem létező ételhez)
-     */
+    
+    // Gyors étel rögzítése (nem létező ételhez)
     public function quickStore(Request $request)
     {
         $request->validate([
@@ -88,12 +91,14 @@ class DailyCalorieController extends Controller
             'quick_kcal' => 'required|numeric|min:1',
         ]);
 
+        // Létrehozzuk az élelmiszert
         $newFood = Food::create([
             'foodname' => $request->quick_name . ' (Gyors)',
             'calories' => 100, 
             'protein'  => 0, 'carb' => 0, 'fat' => 0, 'fiber' => 0
         ]);
 
+        // Beírjuk a naplóba a megadott kalóriát mennyiségként
         Foodlog::create([
             'userId'   => Auth::id(),
             'foodId'   => $newFood->id,
@@ -104,9 +109,8 @@ class DailyCalorieController extends Controller
         return back()->with('success', 'Gyors étel rögzítve!');
     }
 
-    /**
-     * Edzés rögzítése
-     */
+    //Edzés rögzítése
+     
     public function storeExercise(Request $request)
     {
         $request->validate([
@@ -128,14 +132,14 @@ class DailyCalorieController extends Controller
         return back()->with('success', 'Edzés elmentve!');
     }
 
-    /**
-     * Előzmények megjelenítése
-     */
+    
+    //Előzmények megjelenítése
     public function history()
     {
         $user = Auth::user();
         $napiLimit = $this->calculateDailyLimit($user->personalData);
 
+        // GroupBy: A PHP tömböt dátumok szerint csoportokba rendez
         $groupedExercises = $user->exercises()->latest('date')->get()->groupBy('date');
         $groupedFoods = Foodlog::where('userId', $user->id)
             ->with('food')
@@ -151,24 +155,25 @@ class DailyCalorieController extends Controller
         return view('pages.History', compact('allDates', 'groupedExercises', 'groupedFoods', 'napiLimit'));
     }
 
-    /**
-     * Törlések
-     */
+    
+    //Étel törlése
+    
     public function destroyFoodLog($id)
     {
         Foodlog::where('userId', Auth::id())->findOrFail($id)->delete();
         return back()->with('success', 'Étel törölve!');
     }
 
+    //Edzés törlése
     public function destroyExercise($id)
     {
         Exercise::where('user_id', Auth::id())->findOrFail($id)->delete();
         return back()->with('success', 'Edzés törölve!');
     }
 
-    /**
-     * SEGÉDFÜGGVÉNY: BMR és Napi limit kiszámítása
-     */
+    
+    //segédfüggvény: BMR és Napi limit kiszámítása
+    
     private function calculateDailyLimit($data)
     {
         if (!$data) return 2000; // Alapértelmezett, ha nincs adat

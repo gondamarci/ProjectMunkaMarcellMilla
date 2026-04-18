@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DailyCalorieController;
 use App\Http\Controllers\FoodController;
@@ -43,7 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}', [FoodController::class, 'destroy'])->name('destroy');
     });
 
-    // Kalória és Napló kezelésS
+    // Kalória és napló kezeléss
     Route::controller(DailyCalorieController::class)->group(function () {
         Route::get('/calories', 'index')->name('calories.index');
         Route::get('/history', 'history')->name('calories.history');
@@ -51,11 +52,27 @@ Route::middleware('auth')->group(function () {
         Route::prefix('daily-calorie')->name('food.log.')->group(function () {
             Route::post('/food-log', 'storeFoodLog')->name('store');
             Route::post('/quick', 'quickStore')->name('quick');
-            Route::delete('/food/{id}', 'destroyFoodLog')->name('destroy');
         });
 
         Route::post('/exercise/store', 'storeExercise')->name('exercise.store');
         Route::delete('/daily-calorie/exercise/{id}', 'destroyExercise')->name('exercise.destroy');
     });
+
+});
+
+/*
+|--------------------------------------------------------------------------
+| Admin útvonalak
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'admin'])->group(function () {
+    // Étel törlése és szerkesztése
+    Route::delete('/food-database/{id}', [FoodController::class, 'destroy'])->name('food.destroy');
+    // Userek listázása, szerkesztése, törlése (ha szükséges)
+    Route::get('/admin/users', [AdminController::class, 'userStats'])->name('admin.users');
+    //Felhasználó törlése 
+    Route::delete('admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
+    // Frissítés/Szerkesztés
+    Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
 
 });

@@ -181,13 +181,20 @@
                             <td><input type="number" step="0.1" name="fiber" value="{{ $f->fiber }}" class="table-edit-input input-num" required></td>
                             <td>
                                 <div style="display: flex; gap: 5px;">
-                                    <button type="submit" class="btn-icon" title="Mentés">💾</button>
+                                    @if (auth()->user()->is_admin)
+                                        <button type="submit" class="btn-icon" title="Mentés">💾</button>
+                                    @endif
                         </form>
-                                    <form action="{{ route('food.destroy', $f->id) }}" method="POST" onsubmit="return confirm('Biztosan törlöd?')">
+                                @if (auth()->user()->is_admin)
+                                    <form action="{{ route('food.destroy', $f->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-icon" title="Törlés">🗑️</button>
                                     </form>
+                                @else
+                                    <button class="btn-icon" title="Nincs jogosultság">🚫</button>
+                                @endif
+
                                 </div>
                             </td>
                     </tr>

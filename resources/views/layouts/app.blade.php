@@ -29,14 +29,14 @@
                 <a href="{{ route('calories.index') }}" class="btn-primary">
                     Kalóriaszámítás
                 </a>
-                
-                {{-- Ide kerül az új Előzmények gomb --}}
                 <a href="{{ route('calories.history') }}" class="btn-primary" style="background: linear-gradient(135deg, #666, #444);">
                     Előzmények
                 </a>
-                {{-- 3. ÚJ: Étel Adatbázis gomb (kékebb vagy zöldebb tónus, hogy elváljon) --}}
                 <a href="{{ route('food.index') }}" class="btn-primary" style="background: linear-gradient(135deg, #4A90E2, #357ABD);">
                     Étel Adatbázis
+                </a>
+                <a href="{{ route('admin.users') }}" class="btn-primary">
+                    Felhasználók kezelése
                 </a>
             @endif
         @endauth

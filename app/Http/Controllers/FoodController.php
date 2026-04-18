@@ -42,6 +42,12 @@ class FoodController extends Controller
     //Étel törlése
     public function destroy($id)
     {
+        // Ellenőrizzük, hogy a felhasználó admin-e
+        if( !auth()->user()->is_admin) {
+            return redirect()->back()->with(403, '❌ Nincs jogosultságod törölni ezt az ételt!');
+        }
+
+        // Töröljük az ételt, ha admin
         $food = Food::findOrFail($id);
         $food->delete(); 
         return redirect()->back()->with('success', '🗑️ Étel törölve!');

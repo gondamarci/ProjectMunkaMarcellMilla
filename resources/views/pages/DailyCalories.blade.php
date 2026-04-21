@@ -15,92 +15,6 @@
     $offset = $kerulet - ($szazalek / 100) * $kerulet;
 @endphp
 
-<style>
-    .dashboard-container {
-        display: grid;
-        grid-template-columns: 320px 1fr 320px;
-        gap: 25px;
-        max-width: 1400px;
-        margin: 40px auto;
-        padding: 0 20px;
-        align-items: start;
-    }
-
-    .dashboard-card {
-        background: white;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-        padding: 25px;
-        border-top: 6px solid #FF8C42;
-    }
-
-    .card-title {
-        color: #D7263D;
-        font-size: 16px;
-        font-weight: 800;
-        text-transform: uppercase;
-        text-align: center;
-        margin-bottom: 20px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #fffaf8;
-    }
-
-    .input-group {
-         margin-bottom: 15px; 
-    }
-    .input-label { font-size: 11px; 
-        font-weight: bold; 
-        color: #999; 
-        display: block; 
-        margin-bottom: 5px; 
-    }
-    .custom-input { 
-        width: 100%; 
-        padding: 12px; 
-        border-radius: 10px; 
-        border: 1px solid #ffe0d0; 
-        background: #fffcfb; 
-        box-sizing: border-box; 
-        font-size: 14px;
-    }
-
-    .center-card { padding: 0; overflow: hidden; border-top-width: 8px; }
-    .header-section { background: #fffaf8; padding: 20px; text-align: center; border-bottom: 1px solid #eee; }
-    
-    .circle-box { padding: 30px; display: flex; flex-direction: column; align-items: center; }
-    .progress-wrapper { position: relative; width: 250px; height: 250px; }
-    .progress-circle { transform: rotate(-90deg); }
-    .progress-circle circle { fill: none; stroke-width: 16; stroke-linecap: round; }
-    .bg-circle { stroke: #f0f0f0; }
-    .fg-circle { 
-        stroke: url(#gradient); 
-        stroke-dasharray: 565; 
-        stroke-dashoffset: {{ $offset }}; 
-        transition: stroke-dashoffset 0.8s ease-out; 
-    }
-    .progress-inner-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; width: 100%; }
-    .big-num { font-size: 45px; font-weight: 900; color: #333; display: block; }
-    .limit-num { color: #888; font-weight: bold; font-size: 16px; }
-
-    .log-section { margin-top: 20px; }
-    .log-header { font-size: 11px; color: #FF8C42; font-weight: 800; margin-bottom: 10px; border-bottom: 1px solid #eee; }
-    .log-item { 
-        display: flex; justify-content: space-between; padding: 10px 0; 
-        border-bottom: 1px solid #f5f5f5; font-size: 13px; align-items: center;
-    }
-    .log-kcal { font-weight: bold; color: #444; }
-
-    .btn-save {
-        width: 100%; padding: 14px; border-radius: 10px; border: none;
-        background: linear-gradient(135deg, #FF8C42 0%, #D7263D 100%);
-        color: white; font-weight: bold; cursor: pointer; text-transform: uppercase;
-        box-shadow: 0 4px 15px rgba(215, 38, 61, 0.2); transition: 0.2s;
-    }
-    .btn-save:hover { transform: translateY(-2px); filter: brightness(1.1); }
-
-    @media (max-width: 1150px) { .dashboard-container { grid-template-columns: 1fr; } }
-</style>
-
 <div class="dashboard-container">
 
     <div class="side-column">
@@ -181,9 +95,31 @@
                         @csrf
                         <div style="display: flex; gap: 10px;">
                             <select name="exercise_type" class="custom-input">
-                                <option value="walk">Séta</option>
-                                <option value="run">Futás</option>
-                                <option value="gym">Súlyzós edzés</option>
+                                <optgroup label="Alapvető">
+                                    <option value="walk">Séta</option>
+                                    <option value="run">Futás</option>
+                                    <option value="bike">Kerékpár</option>
+                                    <option value="swim">Úszás</option>
+                                    <option value="hiking">Túrázás</option>
+                                </optgroup>
+                                <optgroup label="Erősítés & Intenzív">
+                                    <option value="gym">Súlyzós edzés</option>
+                                    <option value="crossfit">Crossfit</option>
+                                    <option value="hiit">HIIT (Intervallum)</option>
+                                    <option value="stairs">Lépcsőzés</option>
+                                </optgroup>
+                                <optgroup label="Csapatsport & Játék">
+                                    <option value="football">Labdarúgás</option>
+                                    <option value="basketball">Kosárlabda</option>
+                                    <option value="tennis">Tenisz</option>
+                                    <option value="martial_arts">Küzdősport</option>
+                                </optgroup>
+                                <optgroup label="Könnyedebb & Csoportos">
+                                    <option value="yoga">Jóga</option>
+                                    <option value="pilates">Pilates</option>
+                                    <option value="aerobics">Aerobik</option>
+                                    <option value="dance">Tánc</option>
+                                </optgroup>
                             </select>
                             <input type="number" name="duration" class="custom-input" placeholder="Perc" required>
                             <button type="submit" class="btn-save" style="width: 120px; padding: 10px;">Mentés</button>

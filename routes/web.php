@@ -30,7 +30,7 @@ Route::controller(AuthController::class)->group(function () {
 */
 Route::middleware('auth')->group(function () {
 
-    // Profil kezelés - Most már a PersonalDataController-t használja
+    // Profil kezelés 
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [PersonalDataController::class, 'edit'])->name('edit'); // <-- ÁTÍRVA
         Route::post('/', [PersonalDataController::class, 'update'])->name('update'); // <-- ÁTÍRVA
@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('daily-calorie')->name('food.log.')->group(function () {
             Route::post('/food-log', 'storeFoodLog')->name('store');
             Route::post('/quick', 'quickStore')->name('quick');
+            Route::delete('/{id}', 'destroyFoodLog')->name('destroy');
         });
 
         Route::post('/exercise/store', 'storeExercise')->name('exercise.store');

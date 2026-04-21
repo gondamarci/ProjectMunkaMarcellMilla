@@ -114,11 +114,32 @@ class DailyCalorieController extends Controller
     public function storeExercise(Request $request)
     {
         $request->validate([
-            'exercise_type' => 'required|string',
-            'duration'      => 'required|numeric|min:1',
+        'exercise_type' => 'required|string',
+        'duration'      => 'required|numeric|min:1',
         ]);
 
-        $factors = ['walk' => 4, 'run' => 10, 'gym' => 6, 'swim' => 8, 'bike' => 7];
+        // Edzés típusok
+        $factors = [
+            'walk'         => 4,
+            'run'          => 10, 
+            'gym'          => 6,
+            'swim'         => 8,
+            'bike'         => 7, 
+            'yoga'         => 3,
+            'aerobics'     => 7,
+            'hiit'         => 12, 
+            'dance'        => 5,
+            'football'     => 8,
+            'basketball'   => 8,
+            'tennis'       => 7,
+            'hiking'       => 6,
+            'stairs'       => 9,
+            'pilates'      => 4,
+            'crossfit'     => 11, 
+            'martial_arts' => 10, 
+        ];
+
+        // Ha véletlenül olyan jönne be, ami nincs a listán, az alapértelmezett 5 kcal/perc
         $kcalPerMinute = $factors[$request->exercise_type] ?? 5;
 
         Exercise::create([

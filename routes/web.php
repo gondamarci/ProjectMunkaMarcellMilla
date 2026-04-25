@@ -73,7 +73,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/users', [AdminController::class, 'userStats'])->name('admin.users');
     //Felhasználó törlése 
     Route::delete('admin/users/{user}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
-    // Frissítés/Szerkesztés
-    Route::put('/admin/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
-
 });

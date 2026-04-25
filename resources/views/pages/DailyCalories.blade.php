@@ -71,8 +71,8 @@
                                 <stop offset="100%" stop-color="#D7263D" />
                             </linearGradient>
                         </defs>
-                        <circle class="bg-circle" cx="125" cy="125" r="90"></circle>
-                        <circle class="fg-circle" cx="125" cy="125" r="90"></circle>
+                        <circle class="bg-circle" cx="125" cy="125" r="90" ></circle>
+                        <circle class="fg-circle" cx="125" cy="125" r="90" style="stroke-dashoffset: {{ $offset }};"></circle>
                     </svg>
                     <div class="progress-inner-text">
                         <span class="big-num">{{ round($aktualis) }}</span>
@@ -139,8 +139,11 @@
                     @forelse($consumedToday as $item)
                         <div class="log-item">
                             <div style="flex: 1;">
-                                <strong>{{ $item->food->foodname }}</strong> ({{ $item->quantity }}g)<br>
-                                <span class="log-kcal">{{ round(($item->food->calories / 100) * $item->quantity) }} kcal</span>
+                                <strong>{{ $item->food ? $item->food->foodname : 'Törölt étel' }}</strong> ({{ $item->quantity }}g)<br>
+                                
+                                <span class="log-kcal">
+                                    {{ $item->food ? round(($item->food->calories / 100) * $item->quantity) : 0 }} kcal
+                                </span>
                             </div>
                             <form action="{{ route('food.log.destroy', $item->id) }}" method="POST">
                                 @csrf

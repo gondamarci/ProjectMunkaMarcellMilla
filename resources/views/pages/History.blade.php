@@ -17,11 +17,13 @@
             $bevittKcal = 0; $osszFeherje = 0; $osszSzenhidrat = 0; $osszZsir = 0;
 
             foreach($dayFoods as $fLog) {
-                $ratio = $fLog->quantity / 100;
-                $bevittKcal += $fLog->food->calories * $ratio;
-                $osszFeherje += $fLog->food->protein * $ratio;
-                $osszSzenhidrat += $fLog->food->carb * $ratio;
-                $osszZsir += $fLog->food->fat * $ratio;
+                if ($fLog-> food) {
+                    $ratio = $fLog->quantity / 100;
+                    $bevittKcal += $fLog->food->calories * $ratio;
+                    $osszFeherje += $fLog->food->protein * $ratio;
+                    $osszSzenhidrat += $fLog->food->carb * $ratio;
+                    $osszZsir += $fLog->food->fat * $ratio;
+                }
             }
 
             $maradekKcal = $napiLimit - ($bevittKcal - $napiEgetes);
@@ -45,10 +47,12 @@
                 @forelse($dayFoods as $f)
                     <div class="log-item">
                         <div class="item-info">
-                            <span class="item-name">{{ $f->food->foodname }}</span>
+                            <span class="item-name">{{ $f->food ? $f->food->foodname : 'Törölt étel' }}</span>
                             <span class="item-sub">{{ $f->quantity }} gramm</span>
                         </div>
-                        <span class="item-val" style="color: #444;">{{ round(($f->food->calories / 100) * $f->quantity) }} kcal</span>
+                        <span class="item-val" style="color: #444;">
+                            {{ $f->food ? round(($f->food->calories / 100) * $f->quantity) : 0 }} kcal
+                        </span>
                     </div>
                 @empty
                     <p style="font-size: 12px; color: #ccc; margin-bottom: 15px;">Nem rögzítettél ételt.</p>

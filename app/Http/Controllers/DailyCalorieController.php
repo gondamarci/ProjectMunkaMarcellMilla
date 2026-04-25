@@ -11,7 +11,6 @@ use Carbon\Carbon;
 class DailyCalorieController extends Controller
 {
     
-    // Főoldal: Napi statisztikák megjelenítése 
     public function index()
     {
 
@@ -34,13 +33,16 @@ class DailyCalorieController extends Controller
             ->with('food')
             ->get();
 
-        // Tápanyagok összesítése (Collection használatával, ciklus helyett)
+        // Tápanyagok összesítése
         $totals = $consumedToday->reduce(function ($carry, $log) {
-            $ratio = $log->quantity / 100;
-            $carry['kcal'] += $log->food->calories * $ratio;
-            $carry['protein'] += $log->food->protein * $ratio;
-            $carry['carb'] += $log->food->carb * $ratio;
-            $carry['fat'] += $log->food->fat * $ratio;
+            // CSAK AKKOR SZÁMOL, HA LÉTEZIK AZ ÉTEL!
+            if ($log->food) {
+                $ratio = $log->quantity / 100;
+                $carry['kcal'] += $log->food->calories * $ratio;
+                $carry['protein'] += $log->food->protein * $ratio;
+                $carry['carb'] += $log->food->carb * $ratio;
+                $carry['fat'] += $log->food->fat * $ratio;
+            }
             return $carry;
         }, ['kcal' => 0, 'protein' => 0, 'carb' => 0, 'fat' => 0]);
 

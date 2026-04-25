@@ -11,25 +11,26 @@ use Carbon\Carbon;
 class WeightLogController extends Controller
 {
     public static function currentWeight()
-        {
-            $user = Auth::user();
-            if (!$user || !$user->personalData) return '0';
+    {
+        $user = Auth::user();
+        if (!$user || !$user->personalData) return '0';
 
-            $data = $user->personalData;
-            
-            // Tegnapi eredmény rögzítése, ha még nem történt meg 
-            $today = now()->format('Y-m-d');
-            $lastUpdate = $data->updated_at->format('Y-m-d');
+        $data = $user->personalData;
+        
+        // Tegnapi eredmény rögzítése, ha még nem történt meg 
+        $today = now()->format('Y-m-d');
+        $lastUpdate = $data->updated_at->format('Y-m-d');
 
-            if ($lastUpdate < $today) {
+        if ($lastUpdate < $today) {
             $yesterday = now()->subDay()->format('Y-m-d');
             
             // Tegnapi kalóriák lekérése
             $yesterdayIn = $user->Foodlog()->whereDate('date', $yesterday)->get()->sum(function($log) {
-                return ($log->food->calories / 100) * $log->quantity;
+                // Csak akkor számol, ha létezik az étel, különben 0-t ad hozzá
+                return $log->food ? ($log->food->calories / 100) * $log->quantity : 0;
             });
 
-            // Csak akkor számít a tegnapi eredmény, ha nem 0 a tegnapi bevitel (így nem írja felül a súlyt, ha nem evett tegnap)
+            // Csak akkor számít a tegnapi eredmény, ha nem 0 a tegnapi bevitel
             if ($yesterdayIn > 0) {
                 $kor = Carbon::parse($data->birthDate)->age;
                 $bmr = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
@@ -42,26 +43,27 @@ class WeightLogController extends Controller
             
             $data->touch();
             $data->save(); 
-        }
+        } 
 
 
-            // Aznapi mozgás rögzítése 
-            $caloriesIn = $user->Foodlog()->whereDate('date', now())->get()->sum(function($log) {
-                return ($log->food->calories / 100) * $log->quantity;
-            });
+        // Aznapi kalóriák lekérése
+        $caloriesIn = $user->Foodlog()->whereDate('date', now())->get()->sum(function($log) {
+            // Csak akkor számol, ha létezik az étel, különben 0-t ad hozzá
+            return $log->food ? ($log->food->calories / 100) * $log->quantity : 0;
+        });
 
-            // A mai TDEE-t a frissített súly alapján
-            $kor = Carbon::parse($data->birthDate)->age;
-            $bmrToday = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
-            $bmrToday += ($data->gender === 'male' || $data->gender === 'férfi') ? 5 : -161;
-            $tdeeToday = $bmrToday * (float)$data->lifestyle;
+        // A mai TDEE-t a frissített súly alapján
+        $kor = Carbon::parse($data->birthDate)->age;
+        $bmrToday = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
+        $bmrToday += ($data->gender === 'male' || $data->gender === 'férfi') ? 5 : -161;
+        $tdeeToday = $bmrToday * (float)$data->lifestyle;
 
-            // Időarányos égetés (mennyi égett el éjféltől mostanáig)
-            $passedTimeFactor = now()->diffInMinutes(now()->startOfDay()) / 1440; 
-            $burnedSoFar = $tdeeToday * $passedTimeFactor;
+        // Időarányos égetés (mennyi égett el éjféltől mostanáig)
+        $passedTimeFactor = now()->diffInMinutes(now()->startOfDay()) / 1440; 
+        $burnedSoFar = $tdeeToday * $passedTimeFactor;
 
-            $diff = ($caloriesIn - $burnedSoFar) / 7700;
+        $diff = ($caloriesIn - $burnedSoFar) / 7700;
 
-            return round($data->weight + $diff, 2);
-        }
+        return round($data->weight + $diff, 2);
+    }
 }

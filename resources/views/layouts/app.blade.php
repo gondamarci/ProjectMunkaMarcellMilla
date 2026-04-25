@@ -35,9 +35,12 @@
                 <a href="{{ route('food.index') }}" class="btn-primary" style="background: linear-gradient(135deg, #4A90E2, #357ABD);">
                     Étel Adatbázis
                 </a>
+
+                @if (auth()->user()->is_admin)
                 <a href="{{ route('admin.users') }}" class="btn-primary">
                     Felhasználók kezelése
                 </a>
+                @endif
             @endif
         @endauth
         </div>

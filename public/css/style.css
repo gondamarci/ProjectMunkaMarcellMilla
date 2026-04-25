@@ -1,5 +1,148 @@
+/* ==========================================================================
+   📱 RESZPONZÍV STÍLUSOK (TABLET ÉS MOBIL)
+   ========================================================================== 
+*/
+
+/* ------------------------------------------------------------
+   MOBIL ÉS TABLET NÉZET (1024px alatt)
+   Navbar, Kezdőoldal és általános reszponzivitás.
+   ------------------------------------------------------------ 
+*/
+@media (max-width: 1024px) {
+
+    /* NAVIGÁCIÓ (Kompakt Menü)  */
+    nav {
+        flex-direction: column;
+        padding: 8px 5px;
+        gap: 8px;
+    }
+
+    .nav-links {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+        width: 100%;
+        padding: 0 10px;
+    }
+
+    .dashboard-container { 
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100%;
+        gap: 30px;
+    } 
+    .side-column, .center-column {
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* 5. menüpont (Admin) középre igazítása, ha létezik */
+    .nav-links a:nth-child(5) {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: 60%; 
+    }
+
+    .nav-auth {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding-top: 5px;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        width: 100%;
+    }
+
+    .nav-links a, .btn-primary {
+        font-size: 12px;
+        padding: 6px 4px;
+        text-align: center;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 35px;
+    }
+
+    .nav-link[style*="color: #FF8C42"] { font-size: 13px; }
+    .dropdown-trigger { font-size: 13px; padding: 5px 10px; }
+
+    .container {
+        padding-top: 200px !important;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    /*  KEZDŐOLDAL */
+    .hero-section {
+        padding: 40px 10px;
+    }
+
+    .hero-section h1 {
+        font-size: 28px;
+        line-height: 1.2; 
+        margin-bottom: 15px;
+    }
+
+    .hero-section p {
+        font-size: 15px;
+        line-height: 1.5;
+        padding: 0 10px;
+        margin-bottom: 30px;
+    }
+
+    /*  ÉTEL RÖGZÍTÉSE ŰRLAP  */
+    .food-card .input-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 20px;
+    }
+
+    /* Rost (utolsó elem) középre igazítása */
+    .food-card .input-grid .input-group:last-child {
+        grid-column: 1 / -1;
+        width: 48%;
+        margin: 0 auto;
+    }
+
+    /* --- ÉTEL ADATBÁZIS TÁBLÁZAT --- */
+    .table-wrapper { 
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+        border-radius: 12px;
+    }
+
+    .table-edit-input { min-width: 150px; }
+    .table-edit-input.input-num { min-width: 85px; }
+
+    .food-table { 
+        width: 100%; 
+        border-collapse: separate; 
+        border-spacing: 0; 
+        margin-top: 10px; 
+    }
+
+    .food-table th { white-space: nowrap; }
+
+    /* --- EXTRA MOBIL FINOMÍTÁS (500px alatt) --- */
+    @media (max-width: 500px) {
+        .food-card .input-grid {
+            grid-template-columns: 1fr !important;
+        }
+        .food-card .input-grid .input-group:last-child {
+            width: 100%;
+        }
+    }
+
+
+}
+
+
 /* ============================================================
-   0. CSS VÁLTOZÓK (Így könnyebb módosítani a dizájnt később)
+   0. CSS VÁLTOZÓK 
    ============================================================ */
 :root {
     --brand-orange: #FF8C42;
@@ -443,7 +586,9 @@ select:focus,
 
 .center-card {
     padding: 0;
-    border-top-width: 8px;
+    border-top: 8px solid #FF8C42; 
+    overflow: hidden; 
+    border-radius: 15px; 
 }
 
 .header-section {
@@ -483,7 +628,6 @@ select:focus,
 .fg-circle {
     stroke: url(#gradient);
     stroke-dasharray: 565;
-    stroke-dashoffset: {{ $offset }};
     transition: stroke-dashoffset 0.8s ease-out;
 }
 
@@ -675,8 +819,3 @@ select:focus,
     border-bottom: 1px solid #f4f4f4;
 }
 
-@media (max-width: 1150px) {
-    .dashboard-container {
-        grid-template-columns: 1fr;
-    }
-}

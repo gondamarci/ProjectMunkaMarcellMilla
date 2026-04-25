@@ -58,19 +58,19 @@ class FoodSeeder extends Seeder
                     ['foodname' => 'Csicseriborsó (száraz, 100g)', 'calories' => 364, 'protein' => 19.3, 'carb' => 60.6, 'fat' => 6.0, 'fiber' => 17.4, 'created_at' => now(), 'updated_at' => now()],
 
                     //Tejtermékek
-                    ['foodname' => 'Tojás (M-es, 1db ~50g)', 'calories' => 78, 'protein' => 6.5, 'carb' => 0.6, 'fat' => 5.3, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'Tojás (M-es, 1db ~50g)', 'calories' => 155, 'protein' => 13.0, 'carb' => 1.1, 'fat' => 11.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Főtt tojás (1 db ~50g)', 'calories' => 155, 'protein' => 13.0, 'carb' => 1.1, 'fat' => 11.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Tükörtojás (1 db ~50g) - kevés olajjal)', 'calories' => 196, 'protein' => 13.5, 'carb' => 0.8, 'fat' => 15.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Tojásrántotta (2 db-ból ~110g, vajjal/olajjal)', 'calories' => 170, 'protein' => 11.0, 'carb' => 1.5, 'fat' => 13.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Tojásfehérje (Lé - 100g)', 'calories' => 52, 'protein' => 11.0, 'carb' => 0.7, 'fat' => 0.2, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'Tojássárgája (1 db ~17g)', 'calories' => 55, 'protein' => 2.7, 'carb' => 0.6, 'fat' => 4.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'Tojássárgája (1 db ~17g)', 'calories' => 322, 'protein' => 15.8, 'carb' => 3.5, 'fat' => 26.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Sovány túró', 'calories' => 80, 'protein' => 14.1, 'carb' => 3.8, 'fat' => 0.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Trappista sajt (1 szelet ~ 20g)', 'calories' => 352, 'protein' => 25.0, 'carb' => 0.0, 'fat' => 28.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Skyr (natúr, 1 pohár ~ 150g)', 'calories' => 63, 'protein' => 11.0, 'carb' => 4.0, 'fat' => 0.2, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Tej (1,5%-os)', 'calories' => 44, 'protein' => 3.4, 'carb' => 4.7, 'fat' => 1.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Tej (2,8%-os)', 'calories' => 56, 'protein' => 3.3, 'carb' => 4.6, 'fat' => 2.8, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Habtejszín (30%-os)', 'calories' => 292, 'protein' => 2.3, 'carb' => 3.1, 'fat' => 30.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'Tejföl (12%-os)', 'calories' => 134, 'protein' => 3.3, 'carb' => 3.9, 'fat' => 12.0, 'fiber' => 0.0, 'created_at' => now(),('updated_at') => now()],
+                    ['foodname' => 'Tejföl (12%-os)', 'calories' => 134, 'protein' => 3.3, 'carb' => 3.9, 'fat' => 12.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Kefir', 'calories' => 46, 'protein' => 3.2, 'carb' => 4.4, 'fat' => 1.5, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Mozzarella sajt', 'calories' => 280, 'protein' => 22.0, 'carb' => 2.2, 'fat' => 20.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Feta sajt', 'calories' => 264, 'protein' => 14.0, 'carb' => 4.1, 'fat' => 21.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
@@ -108,28 +108,28 @@ class FoodSeeder extends Seeder
                     ['foodname' => 'Görögdinnye (1 szelet ~300g)', 'calories' => 30, 'protein' => 0.6, 'carb' => 7.6, 'fat' => 0.2, 'fiber' => 0.4, 'created_at' => now(), 'updated_at' => now()],
 
                     // McDonald's (Adagok súlya grammban)
-                    ['foodname' => 'McDonalds - Big Mac (1db 215g)', 'calories' => 503, 'protein' => 26.0, 'carb' => 42.0, 'fat' => 25.0, 'fiber' => 3.1, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'McDonalds - Sajtburger (1db 115g)', 'calories' => 300, 'protein' => 16.0, 'carb' => 30.0, 'fat' => 12.0, 'fiber' => 2.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'McDonalds - McChicken (1db 170g)', 'calories' => 445, 'protein' => 21.0, 'carb' => 41.0, 'fat' => 22.0, 'fiber' => 2.2, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'McDonalds - McFarm (1db 165g)', 'calories' => 434, 'protein' => 21.0, 'carb' => 30.0, 'fat' => 25.0, 'fiber' => 2.4, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'McDonalds - McNuggets (6 db - 105g)', 'calories' => 250, 'protein' => 15.0, 'carb' => 15.0, 'fat' => 14.0, 'fiber' => 1.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'McDonalds - Sült krumpli (Kicsi - 75g)', 'calories' => 231, 'protein' => 2.4, 'carb' => 29.0, 'fat' => 11.0, 'fiber' => 2.5, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'McDonalds - Sült krumpli (Közepes - 115g)', 'calories' => 334, 'protein' => 3.5, 'carb' => 42.0, 'fat' => 16.0, 'fiber' => 3.6, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'McDonalds - Sült krumpli (Nagy - 150g)', 'calories' => 434, 'protein' => 4.5, 'carb' => 54.0, 'fat' => 21.0, 'fiber' => 4.7, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - Big Mac (1db 215g)', 'calories' => 239, 'protein' => 12.0, 'carb' => 20.0, 'fat' => 12.0, 'fiber' => 1.4, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - Sajtburger (1db 115g)', 'calories' => 261, 'protein' => 14.0, 'carb' => 26.0, 'fat' => 10.4, 'fiber' => 1.7, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - McChicken (1db 170g)', 'calories' => 262, 'protein' => 12.4, 'carb' => 24.1, 'fat' => 12.9, 'fiber' => 1.3, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - McFarm (1db 165g)', 'calories' => 263, 'protein' => 12.7, 'carb' => 18.2, 'fat' => 15.2, 'fiber' => 1.5, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - McNuggets (6 db - 105g)', 'calories' => 238, 'protein' => 14.3, 'carb' => 14.3, 'fat' => 13.3, 'fiber' => 1.0, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - Sült krumpli (Kicsi - 75g)', 'calories' => 290, 'protein' => 3.0, 'carb' => 36.0, 'fat' => 14.0, 'fiber' => 3.1, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - Sült krumpli (Közepes - 115g)', 'calories' => 290, 'protein' => 3.0, 'carb' => 36.0, 'fat' => 14.0, 'fiber' => 3.1, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'McDonalds - Sült krumpli (Nagy - 150g)', 'calories' => 290, 'protein' => 3.0, 'carb' => 36.0, 'fat' => 14.0, 'fiber' => 3.1, 'created_at' => now(), 'updated_at' => now()],
 
                     // KFC (Adagok súlya grammban)
-                    ['foodname' => 'KFC - Zinger szendvics (1db 175g)', 'calories' => 445, 'protein' => 22.0, 'carb' => 35.0, 'fat' => 24.0, 'fiber' => 2.5, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'KFC - Twister (1db 215g)', 'calories' => 485, 'protein' => 19.0, 'carb' => 48.0, 'fat' => 24.0, 'fiber' => 3.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'KFC - Hot Wings (5 db - 135g)', 'calories' => 450, 'protein' => 28.0, 'carb' => 12.0, 'fat' => 32.0, 'fiber' => 1.5, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'KFC - Qurrito (1db 220g)', 'calories' => 620, 'protein' => 34.0, 'carb' => 48.0, 'fat' => 32.0, 'fiber' => 2.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'KFC - Panírozott csirkemell csík (3 db - 90g)', 'calories' => 245, 'protein' => 21.0, 'carb' => 9.0, 'fat' => 14.0, 'fiber' => 0.8, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'KFC - Zinger szendvics (1db 175g)', 'calories' => 254, 'protein' => 12.6, 'carb' => 20.0, 'fat' => 13.7, 'fiber' => 1.4, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'KFC - Twister (1db 215g)', 'calories' => 226, 'protein' => 8.8, 'carb' => 22.3, 'fat' => 11.2, 'fiber' => 1.4, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'KFC - Hot Wings (5 db - 135g)', 'calories' => 333, 'protein' => 20.7, 'carb' => 8.9, 'fat' => 23.7, 'fiber' => 1.1, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'KFC - Qurrito (1db 220g)', 'calories' => 282, 'protein' => 15.5, 'carb' => 21.8, 'fat' => 14.5, 'fiber' => 0.9, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'KFC - Panírozott csirkemell csík (3 db - 90g)', 'calories' => 272, 'protein' => 23.3, 'carb' => 10.0, 'fat' => 15.6, 'fiber' => 0.9, 'created_at' => now(), 'updated_at' => now()],
 
                     // Burger King (Adagok súlya grammban)
-                    ['foodname' => 'Burger King - Whopper (1db 270g)', 'calories' => 640, 'protein' => 28.0, 'carb' => 49.0, 'fat' => 37.0, 'fiber' => 3.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'Burger King - Steakhouse Burger (1db 320g)', 'calories' => 790, 'protein' => 35.0, 'carb' => 52.0, 'fat' => 49.0, 'fiber' => 4.0, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'Burger King - Whopper (1db 270g)', 'calories' => 237, 'protein' => 10.4, 'carb' => 18.1, 'fat' => 13.7, 'fiber' => 1.1, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'Burger King - Steakhouse Burger (1db 320g)', 'calories' => 247, 'protein' => 10.9, 'carb' => 16.3, 'fat' => 15.3, 'fiber' => 1.3, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Burger King - Chili Cheese Nuggets (6 db - 100g)', 'calories' => 230, 'protein' => 8.0, 'carb' => 19.0, 'fat' => 13.0, 'fiber' => 1.5, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'Burger King - Bacon King (1db szimpla - 250g)', 'calories' => 900, 'protein' => 48.0, 'carb' => 45.0, 'fat' => 60.0, 'fiber' => 2.0, 'created_at' => now(), 'updated_at' => now()],
-                    ['foodname' => 'Burger King - Hagymakarika (9 db - 120g)', 'calories' => 320, 'protein' => 3.0, 'carb' => 40.0, 'fat' => 16.0, 'fiber' => 2.5, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'Burger King - Bacon King (1db szimpla - 250g)', 'calories' => 360, 'protein' => 19.2, 'carb' => 18.0, 'fat' => 24.0, 'fiber' => 0.8, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'Burger King - Hagymakarika (9 db - 120g)', 'calories' => 267, 'protein' => 2.5, 'carb' => 33.3, 'fat' => 13.3, 'fiber' => 2.1, 'created_at' => now(), 'updated_at' => now()],
                     
                     // Cukros Üdítők (100ml = ~42-50 kcal)
                     ['foodname' => 'Coca-Cola (100ml)', 'calories' => 42.0, 'protein' => 0.0, 'carb' => 10.6, 'fat' => 0.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
@@ -227,7 +227,7 @@ class FoodSeeder extends Seeder
                     ['foodname' => 'Majonéz (1 evőkanál ~15g)', 'calories' => 680, 'protein' => 1.0, 'carb' => 3.0, 'fat' => 75.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
 
                     // Édesítés (100g)
-                    ['foodname' => 'Kristálycukor ', 'calories' => 387, 'protein' => 0.0, 'carb' => 100.0, 'fat' => 0.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
+                    ['foodname' => 'Kristálycukor', 'calories' => 387, 'protein' => 0.0, 'carb' => 100.0, 'fat' => 0.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     ['foodname' => 'Méz', 'calories' => 304, 'protein' => 0.3, 'carb' => 82.0, 'fat' => 0.0, 'fiber' => 0.0, 'created_at' => now(), 'updated_at' => now()],
                     
                 ]

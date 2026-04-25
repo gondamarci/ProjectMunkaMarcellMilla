@@ -28,6 +28,9 @@
     .dashboard-container { 
         display: flex !important;
         flex-direction: column !important;
+        grid-template-columns: none !important; 
+        padding: 0 10px !important;
+        margin: 0 auto !important;
         width: 100%;
         gap: 30px;
     } 
@@ -70,7 +73,7 @@
     .dropdown-trigger { font-size: 13px; padding: 5px 10px; }
 
     .container {
-        padding-top: 200px !important;
+        padding-top: 230px !important;
         padding-left: 10px;
         padding-right: 10px;
     }
@@ -125,7 +128,33 @@
         margin-top: 10px; 
     }
 
-    .food-table th { white-space: nowrap; }
+    /* Előzmény kártyák szélesebbé tétele*/
+    .history-wrapper {
+        width: 100% !important;
+        max-width: 96% !important; 
+        margin: 0 auto !important;
+        padding: 0 5px !important;
+    }
+    
+    /* A statisztikai rács kicsit szellősebbé tétele */
+    .daily-stats-summary {
+        padding: 15px 5px !important;
+        gap: 5px !important;
+    }
+
+    /* Étel adatbázis táblázat szélesebbé tétele */
+    .food-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
+        margin: 0 !important;
+    }
+
+    
+
+
+
 
     /* --- EXTRA MOBIL FINOMÍTÁS (500px alatt) --- */
     @media (max-width: 500px) {

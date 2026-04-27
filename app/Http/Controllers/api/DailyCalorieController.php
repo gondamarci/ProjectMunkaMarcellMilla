@@ -56,7 +56,7 @@ class DailyCalorieController extends Controller
                 'tdeeLimit' => $tdeeTotal,
                 'remaining' => round($remaining),
                 'date' => now()->format('Y-m-d')
-            ]s
+            ]
         ], 200);
     }
 

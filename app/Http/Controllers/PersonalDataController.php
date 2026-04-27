@@ -12,14 +12,15 @@ class PersonalDataController extends Controller
     // Profil szerkesztő oldal
     public function edit()
     {
+        // Hitelesített felhasználó személyes adatainak lekérése
         $data = Auth::user()->personalData; 
-
         return view('pages.edit', compact('data'));
     }
 
     //Adatok mentése vagy frissítése
     public function update(Request $request)
     {
+        // Validáció és adatellenőrzés
         $validated = $request->validate([
             'birthDate' => 'required|date',
             'gender'    => 'required|in:male,female',
@@ -29,6 +30,7 @@ class PersonalDataController extends Controller
             'goalWeight' => 'required|numeric',
         ]);
     
+        // Személyes adatok mentése vagy frissítése a kapcsolaton keresztül
         Auth::user()->personalData()->updateOrCreate(
             ['userId' => Auth::id()], 
             $validated                

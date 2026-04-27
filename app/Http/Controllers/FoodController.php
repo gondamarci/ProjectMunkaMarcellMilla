@@ -13,6 +13,7 @@ class FoodController extends Controller
     
     public function index()
     {
+        // Ételek lekérése név szerint növekvő sorrendben
         $foods = Food::orderBy('foodname', 'asc')->get();
         return view('pages.food_list', compact('foods'));
     }
@@ -22,8 +23,10 @@ class FoodController extends Controller
     
     public function store(Request $request)
     {
+        // Validáció és adatellenőrzés
         $validated = $this->validateFood($request);
 
+        // Étel létrehozása az adatbázisban
         Food::create($validated);
         return redirect()->back()->with('success', '✅ Étel sikeresen hozzáadva az adatbázishoz!');
     }
@@ -32,8 +35,10 @@ class FoodController extends Controller
     //Meglévő étel frissítése
     public function update(Request $request, $id)
     {
+        // Validáció és adatellenőrzés
         $validated = $this->validateFood($request);
 
+        // Étel frissítése az adatbázisban
         $food = Food::findOrFail($id);
         $food->update($validated);
         return redirect()->back()->with('success', '🔄 Étel sikeresen frissítve!');
@@ -57,6 +62,7 @@ class FoodController extends Controller
     //segédfüggvény: Étel adatok validálása
     private function validateFood(Request $request)
     {
+        // Visszaadjuk a validált adatokat.
         return $request->validate([
             'foodname' => 'required|string|max:255',
             'calories' => 'required|numeric|min:0',

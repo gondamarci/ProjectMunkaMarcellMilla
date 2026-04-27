@@ -24,7 +24,7 @@ class DailyCalorieController extends Controller
             return redirect()->route('profile.edit');
         }
 
-        // Edzések és ételek lekérése
+        // Edzések lekérése
         $eledzett = $user->exercises()->where('date', $today)->sum('kcal_burned');
 
         //Mai étkezések lekérése
@@ -35,7 +35,7 @@ class DailyCalorieController extends Controller
 
         // Tápanyagok összesítése
         $totals = $consumedToday->reduce(function ($carry, $log) {
-            // CSAK AKKOR SZÁMOL, HA LÉTEZIK AZ ÉTEL!
+            // Ha létezik az étel akkor számol
             if ($log->food) {
                 $ratio = $log->quantity / 100;
                 $carry['kcal'] += $log->food->calories * $ratio;
@@ -159,10 +159,11 @@ class DailyCalorieController extends Controller
     //Előzmények megjelenítése
     public function history()
     {
+        // Hitelesítés ellenőrzése
         $user = Auth::user();
         $napiLimit = $this->calculateDailyLimit($user->personalData);
 
-        // GroupBy: A PHP tömböt dátumok szerint csoportokba rendez
+        // Felhasználó összes ételének és edzésének lekérése, majd dátum szerint csoportosítva
         $groupedExercises = $user->exercises()->latest('date')->get()->groupBy('date');
         $groupedFoods = Foodlog::where('userId', $user->id)
             ->with('food')
@@ -170,19 +171,21 @@ class DailyCalorieController extends Controller
             ->get()
             ->groupBy('date');
 
+        // Minden egyedi dátum kigyűjtése, amikor történt valami, és csökkenő sorrendbe rakása
         $allDates = $groupedExercises->keys()
             ->merge($groupedFoods->keys())
             ->unique()
             ->sortDesc();
 
+        // Visszaadjuk a nézetet a szükséges adatokkal
         return view('pages.History', compact('allDates', 'groupedExercises', 'groupedFoods', 'napiLimit'));
     }
 
     
     //Étel törlése
-    
     public function destroyFoodLog($id)
     {
+        // Megkeressük azt a Foodlog bejegyzést, ahol a userId egyezik a bejelentkezett felhasználó id-jával, és az id is megegyezik
         Foodlog::where('userId', Auth::id())->findOrFail($id)->delete();
         return back()->with('success', 'Étel törölve!');
     }
@@ -190,6 +193,7 @@ class DailyCalorieController extends Controller
     //Edzés törlése
     public function destroyExercise($id)
     {
+        // Megkeressük azt a Exercise bejegyzést, ahol a user_id egyezik a bejelentkezett felhasználó id-jával, és az id is megegyezik
         Exercise::where('user_id', Auth::id())->findOrFail($id)->delete();
         return back()->with('success', 'Edzés törölve!');
     }
@@ -199,10 +203,13 @@ class DailyCalorieController extends Controller
     
     private function calculateDailyLimit($data)
     {
-        if (!$data) return 2000; // Alapértelmezett, ha nincs adat
+        // Ha nincs meg a személyes adat, akkor visszaadunk egy alapértéket (pl. 2000 kcal)
+        if (!$data) return 2000; 
 
+        // Kor kiszámítása a születési dátumból
         $kor = Carbon::parse($data->birthDate)->age;
         
+        // BMR kiszámítása a Mifflin-St Jeor képlettel, majd életmód faktorral szorozva
         $bmr = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
         $bmr += ($data->gender === 'male') ? 5 : -161;
 

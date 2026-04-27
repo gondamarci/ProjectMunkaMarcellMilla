@@ -48,13 +48,17 @@ class HistoryController extends Controller
 
     private function calculateDailyLimit($data)
     {
+        // Ha nincs meg a személyes adat, akkor visszaadunk egy alapértéket (pl. 2000 kcal)
         if (!$data) return 2000;
 
+        // Kor kiszámítása a születési dátumból
         $kor = Carbon::parse($data->birthDate)->age;
         
+        // BMR kiszámítása a Mifflin-St Jeor képlettel, majd életmód faktorral szorozva
         $bmr = (10 * $data->weight) + (6.25 * $data->height) - (5 * $kor);
         $bmr += ($data->gender === 'male') ? 5 : -161;
 
+        // Napi kalóriakeret visszaadása
         return round($bmr * (float)$data->lifestyle);
     }
 }

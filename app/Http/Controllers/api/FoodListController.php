@@ -23,10 +23,12 @@ class FoodListController extends Controller
     // Étel hozzáadása az adatbázishoz
     public function store(Request $request)
     {
+        // Validáció és adatellenőrzés
         $validated = $this->validateFood($request);
 
         $food = Food::create($validated);
         
+        // Válasz visszaküldése a mobilnak
         return response()->json([
             'success' => true,
             'message' => 'Étel sikeresen hozzáadva az adatbázishoz!',
@@ -36,10 +38,13 @@ class FoodListController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Validáció és adatellenőrzés
         $validated = $this->validateFood($request);
 
         $food = Food::find($id);
 
+
+        // Ellenőrizzük, hogy a felhasználó admin-e
         if (!Auth::user()->is_admin) {
             return response()->json([
                 'success' => false,
@@ -47,6 +52,7 @@ class FoodListController extends Controller
             ], 403);
         }
 
+        // Ellenőrizzük, hogy az étel létezik-e
         if (!$food) {
             return response()->json([
                 'success' => false,
@@ -54,8 +60,10 @@ class FoodListController extends Controller
             ], 404);
         }
 
+        // Frissítjük az étel adatait
         $food->update($validated);
         
+        // Válasz visszaküldése a mobilnak
         return response()->json([
             'success' => true,
             'message' => 'Étel sikeresen frissítve!',
@@ -75,6 +83,7 @@ class FoodListController extends Controller
 
         $food = Food::find($id);
 
+        // Ellenőrizzük, hogy az étel létezik-e
         if (!$food) {
             return response()->json([
                 'success' => false,
@@ -82,8 +91,10 @@ class FoodListController extends Controller
             ], 404);
         }
 
+        // Töröljük az ételt
         $food->delete(); 
         
+        // Válasz visszaküldése a mobilnak
         return response()->json([
             'success' => true,
             'message' => 'Étel törölve!'
@@ -93,6 +104,7 @@ class FoodListController extends Controller
 
     private function validateFood(Request $request)
     {
+        // Validációs szabályok az étel adataihoz
         return $request->validate([
             'foodname' => 'required|string|max:255',
             'calories' => 'required|numeric|min:0',

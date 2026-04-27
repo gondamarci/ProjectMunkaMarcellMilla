@@ -42,7 +42,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/foods/{id}', [FoodListController::class, 'update']);     
     Route::delete('/foods/{id}', [FoodListController::class, 'destroy']); 
 
-    // Admin műveletek
+
+});
+
+// admin útvonalak (auth + admin middleware)
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+     // Admin műveletek
     Route::get('/admin/users', [ApiAdminController::class, 'userStats']);
     Route::delete('/admin/users/{id}', [ApiAdminController::class, 'destroyUser']);
 });

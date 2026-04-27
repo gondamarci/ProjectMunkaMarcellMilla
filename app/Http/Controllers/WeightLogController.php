@@ -12,15 +12,18 @@ class WeightLogController extends Controller
 {
     public static function currentWeight()
     {
+        // Hitelesített felhasználó lekérése
         $user = Auth::user();
         if (!$user || !$user->personalData) return '0';
 
+        // Személyes adatok lekérése
         $data = $user->personalData;
         
         // Tegnapi eredmény rögzítése, ha még nem történt meg 
         $today = now()->format('Y-m-d');
         $lastUpdate = $data->updated_at->format('Y-m-d');
 
+        // Ha a személyes adatot még ma nem frissítették, akkor frissítjük a súlyt a tegnapi eredmény alapján
         if ($lastUpdate < $today) {
             $yesterday = now()->subDay()->format('Y-m-d');
             
@@ -43,8 +46,7 @@ class WeightLogController extends Controller
             
             $data->touch();
             $data->save(); 
-        } 
-
+        }
 
         // Aznapi kalóriák lekérése
         $caloriesIn = $user->Foodlog()->whereDate('date', now())->get()->sum(function($log) {

@@ -7,10 +7,12 @@
     $mozgott = $eledzett ?? 0;
     $aktualis = $beitt - $mozgott;
     
+    // napi limit meghatározása
     $szazalek = ($napiLimit > 0) ? ($aktualis / $napiLimit) * 100 : 0;
     if($szazalek > 100) $szazalek = 100;
     if($szazalek < 0) $szazalek = 0;
     
+    // kördiagram offset számítása a százalék alapján
     $kerulet = 565;
     $offset = $kerulet - ($szazalek / 100) * $kerulet;
 @endphp

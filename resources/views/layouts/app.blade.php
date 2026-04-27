@@ -24,7 +24,6 @@
         <div class="nav-links">
             <a href="/">Főoldal</a>
         @auth
-            {{-- Ha van már megadott személyes adata --}}
             @if(Auth::user()->personalData)
                 <a href="{{ route('calories.index') }}" class="btn-primary">
                     Kalóriaszámítás

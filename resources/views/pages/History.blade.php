@@ -7,15 +7,21 @@
     
     <h2 style="color: #D7263D; margin: 0 0 35px; font-size: 28px; font-weight: 900; text-transform: uppercase;">Napló Előzmények 📜</h2>
 
+    // Naplóbejegyzések csoportosítása dátum szerint
     @forelse($allDates as $date)
         @php
+            // Az adott naphoz tartozó edzések és ételek lekérése
             $dayExercises = $groupedExercises->get($date) ?? collect();
             $dayFoods = $groupedFoods->get($date) ?? collect();
 
+            // Napi elégetett kalória összesítése
             $napiEgetes = $dayExercises->sum('kcal_burned');
             
+            // Napi bevitt kalória és makrotápanyagok összesítése
             $bevittKcal = 0; $osszFeherje = 0; $osszSzenhidrat = 0; $osszZsir = 0;
 
+
+            // Minden ételre kiszámoljuk a bevitt kalóriát és makrotápanyagokat
             foreach($dayFoods as $fLog) {
                 if ($fLog-> food) {
                     $ratio = $fLog->quantity / 100;
@@ -26,6 +32,7 @@
                 }
             }
 
+            // Napi keret maradék kiszámítása
             $maradekKcal = $napiLimit - ($bevittKcal - $napiEgetes);
         @endphp
 

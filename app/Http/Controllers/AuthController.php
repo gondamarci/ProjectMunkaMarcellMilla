@@ -37,14 +37,14 @@ class AuthController extends Controller
         $request->validate([
             'username' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', 'min:8'], // A 'confirmed' elvár egy password_confirmation mezőt!
+            'password' => ['required', 'confirmed', 'min:8'],
         ]);
 
         // Felhasználó létrehozása
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password), // Titkosítjuk a jelszót
+            'password' => Hash::make($request->password),
         ]);
 
         // Azonnali beléptetés regisztráció után
@@ -57,8 +57,10 @@ class AuthController extends Controller
     // Kijelentkezés
     public function logout(Request $request)
     {
+        // Kijelentkeztetjük a felhasználót
         Auth::logout();
 
+        // Session érvénytelenítése és új token generálása a biztonság érdekében
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 

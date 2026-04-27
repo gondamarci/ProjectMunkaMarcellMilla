@@ -26,6 +26,7 @@ class AdminController extends Controller
         // Felhasználó törlése
         $user->delete();
 
+        // Visszajelzés az adminnak a művelet sikerességéről
         return back()->with('success', "{$user->name} fiókja és adatai sikeresen törölve");
     }
 

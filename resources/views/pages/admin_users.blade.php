@@ -18,6 +18,9 @@
                     <tr>
                         <th>Név</th>
                         <th>Email</th>
+                        <th>Súly</th>
+                        <th>Átlag: kcal</th>
+                        <th>F - SZ - ZS</th>
                         <th>Műveletek</th>
                     </tr>
                 </thead>
@@ -29,6 +32,17 @@
                         </td>
                         <td>
                             <input type="email" name="email" value="{{ $user->email }}" form="form-{{ $user->id }}" class="form-control">
+                        </td>
+                        <td>
+                            <span class="badge bg-secondary">{{ $user->current_weight }} kg</span>
+                        </td>
+                        <td>
+                            <strong>{{ $user->avg_kcal }}</strong>
+                        </td>
+                        <td>
+                            <small>
+                                {{ $user->avg_pro }}g / {{ $user->avg_carb }}g / {{ $user->avg_fat }}g
+                            </small>
                         </td>
                         <td>
                             <div class="d-flex gap-2">

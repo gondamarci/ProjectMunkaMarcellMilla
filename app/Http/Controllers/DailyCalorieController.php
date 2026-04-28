@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Daily_calorie, Exercise, Food, Foodlog};
+use App\Models\{Daily_calorie, Dailycalorie, Exercise, Food, Foodlog, User};
 use App\Http\Requests\{StoreDaily_calorieRequest, UpdateDaily_calorieRequest};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,6 +81,8 @@ class DailyCalorieController extends Controller
             'date'     => Carbon::today(),
         ]);
 
+        $this->updateDailySummary(Auth::id(), Carbon::today());
+
         return back()->with('success', 'Étel rögzítve!');
     }
 
@@ -107,6 +109,8 @@ class DailyCalorieController extends Controller
             'quantity' => $request->quick_kcal, 
             'date'     => Carbon::today(),
         ]);
+
+        $this->updateDailySummary(Auth::id(), Carbon::today());
 
         return back()->with('success', 'Gyors étel rögzítve!');
     }
@@ -185,9 +189,25 @@ class DailyCalorieController extends Controller
     //Étel törlése
     public function destroyFoodLog($id)
     {
-        // Megkeressük azt a Foodlog bejegyzést, ahol a userId egyezik a bejelentkezett felhasználó id-jával, és az id is megegyezik
-        Foodlog::where('userId', Auth::id())->findOrFail($id)->delete();
-        return back()->with('success', 'Étel törölve!');
+        // Megkeressük a bejegyzést
+        $log = Foodlog::where('userId', Auth::id())->find($id);
+
+        // Ha nincs meg a bejegyzés, visszatérünk egy hibaüzenettel
+        if (!$log) {
+            return back()->with('error', 'Az étel nem található.');
+        }
+
+        // Elmentjük a userId-t és a dátumot, hogy utána frissíteni tudjuk a napi összesítőt
+        $userId = $log->userId;
+        $date = $log->date;
+
+        // Töröljük a bejegyzést
+        $log->delete();
+
+        // Frissítjük a napi összesítőt a törlés után
+        $this->updateDailySummary($userId, $date);
+
+        return back()->with('success', 'Étel törölve és statisztika frissítve!');
     }
 
     //Edzés törlése
@@ -214,5 +234,33 @@ class DailyCalorieController extends Controller
         $bmr += ($data->gender === 'male') ? 5 : -161;
 
         return round($bmr * (float)$data->lifestyle);
+    }
+
+    private function updateDailySummary($userId, $date)
+    {
+        $user = User::find($userId);
+
+        // Összesítjük az aznapi tápanyagokat a foodlog-ból
+        $summary = $user->FoodLog()->whereDate('date', $date)->get()->reduce(function($carry, $log) {
+            if ($log->food) {
+                $ratio = $log->quantity / 100;
+                $carry['kcal'] += $log->food->calories * $ratio;
+                $carry['pro'] += $log->food->protein * $ratio;
+                $carry['carb'] += $log->food->carb * $ratio;
+                $carry['fat'] += $log->food->fat * $ratio;
+            }
+            return $carry;
+        }, ['kcal' => 0, 'pro' => 0, 'carb' => 0, 'fat' => 0]);
+
+        // Mentés vagy frissítés a dailycalories táblában
+        Dailycalorie::updateOrCreate(
+            ['userId' => $userId, 'date' => $date],
+            [
+                'totalCalories' => round($summary['kcal']),
+                'totalProtein' => round($summary['pro'], 1),
+                'totalCarb' => round($summary['carb'], 1),
+                'totalFat' => round($summary['fat'], 1),
+            ]
+        );
     }
 }

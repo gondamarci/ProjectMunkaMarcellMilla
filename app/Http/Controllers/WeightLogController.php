@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Weight_log;
 use App\Http\Requests\StoreWeight_logRequest;
 use App\Http\Requests\UpdateWeight_logRequest;
+use App\Models\Weightlog;
 use Auth;
 use Carbon\Carbon;
 
@@ -43,6 +44,13 @@ class WeightLogController extends Controller
                 $yesterdayDiff = ($yesterdayIn - $tdeeTotal) / 7700;
                 $data->weight = round($data->weight + $yesterdayDiff, 2);
             }
+
+            
+            Weightlog::updateOrCreate(
+                ['userId' => $user->id, 'date' => $yesterday],
+                ['weight' => $data->weight]
+            );
+
             
             $data->touch();
             $data->save(); 

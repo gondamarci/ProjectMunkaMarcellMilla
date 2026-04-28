@@ -52,7 +52,7 @@ class User extends Authenticatable
         return $this->hasOne(PersonalData::class, 'userId');
 }
 
-    public function Weightlog(){
+    public function Weightlogs(){
         return $this->hasMany(Weightlog::class, 'userId');
     }
 

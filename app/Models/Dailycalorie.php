@@ -10,6 +10,15 @@ class Dailycalorie extends Model
     /** @use HasFactory<\Database\Factories\DailyCalorieFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'userId',
+        'totalCalories',
+        'totalProtein',
+        'totalCarb',
+        'totalFat',
+        'date'
+    ];
+
     public function User(){
         return $this->belongsTo(User::class, 'userId');
     }

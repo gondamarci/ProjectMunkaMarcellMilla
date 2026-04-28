@@ -10,6 +10,13 @@ class Weightlog extends Model
     /** @use HasFactory<\Database\Factories\WeightLogFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'userId', 
+        'weight', 
+        'date'
+    ];
+
+
     public function User(){
         return $this->belongsTo(User::class, 'userId');
     }

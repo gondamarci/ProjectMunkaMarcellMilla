@@ -32,7 +32,7 @@ A webalkalmazás célja, hogy a felhasználó egy reszponzív és esztétikus fe
   <li> Eloquent ORM </li>
 </ul>
 
-<h2> </> Frontend </h2>
+<h2> 🖥️ Frontend </h2>
 
 <ul>
   <li> Blade </li>

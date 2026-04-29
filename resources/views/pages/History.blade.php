@@ -18,7 +18,7 @@
             $napiEgetes = $dayExercises->sum('kcal_burned');
             
             // Napi bevitt kalória és makrotápanyagok összesítése
-            $bevittKcal = 0; $osszFeherje = 0; $osszSzenhidrat = 0; $osszZsir = 0;
+            $bevittKcal = 0; $osszFeherje = 0; $osszSzenhidrat = 0; $osszZsir = 0 ; $osszRost = 0;
 
 
             // Minden ételre kiszámoljuk a bevitt kalóriát és makrotápanyagokat
@@ -29,6 +29,7 @@
                     $osszFeherje += $fLog->food->protein * $ratio;
                     $osszSzenhidrat += $fLog->food->carb * $ratio;
                     $osszZsir += $fLog->food->fat * $ratio;
+                    $osszRost += $fLog->food->fiber * $ratio;
                 }
             }
 
@@ -47,8 +48,8 @@
                 <div class="stat-item"><span class="stat-label">Fehérje</span><span class="stat-value">{{ round($osszFeherje) }}g</span></div>
                 <div class="stat-item"><span class="stat-label">Szénhidrát</span><span class="stat-value">{{ round($osszSzenhidrat) }}g</span></div>
                 <div class="stat-item"><span class="stat-label">Zsír</span><span class="stat-value">{{ round($osszZsir) }}g</span></div>
+                <div class="stat-item"><span class="stat-label">Rost</span><span class="stat-value">{{ round($osszRost) }}g</span></div>
             </div>
-
             <div class="log-details">
                 <div class="list-title food-title">🍎 Megevett ételek:</div>
                 @forelse($dayFoods as $f)

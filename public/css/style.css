@@ -140,6 +140,8 @@
     .daily-stats-summary {
         padding: 15px 5px !important;
         gap: 5px !important;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        text-align: center;
     }
 
     /* Étel adatbázis táblázat szélesebbé tétele */
@@ -746,12 +748,12 @@ select:focus,
 
 .daily-stats-summary {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     padding: 25px;
     background: #fdfdfd;
     text-align: center;
     border-bottom: 1px solid #eee;
-    gap: 15px;
+    gap: 10px   ;
 }
 
 .stat-label {

@@ -89,6 +89,7 @@
                     <div style="text-align: center;"><span class="input-label">Fehérje</span><span style="font-weight:bold;">{{ round($osszFeherje) }}g</span></div>
                     <div style="text-align: center;"><span class="input-label">Szénhidrát</span><span style="font-weight:bold;">{{ round($osszSzenhidrat) }}g</span></div>
                     <div style="text-align: center;"><span class="input-label">Zsír</span><span style="font-weight:bold;">{{ round($osszZsir) }}g</span></div>
+                    <div style="text-align: center;"><span class="input-label">Rost</span><span style="font-weight:bold;">{{ round($osszRost) }}g</span></div>
                 </div>
 
                 <div style="margin-top: 30px;">

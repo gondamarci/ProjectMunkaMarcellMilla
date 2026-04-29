@@ -42,9 +42,10 @@ class DailyCalorieController extends Controller
                 $carry['protein'] += $log->food->protein * $ratio;
                 $carry['carb'] += $log->food->carb * $ratio;
                 $carry['fat'] += $log->food->fat * $ratio;
+                $carry['fiber'] += $log->food->fiber * $ratio;
             }
             return $carry;
-        }, ['kcal' => 0, 'protein' => 0, 'carb' => 0, 'fat' => 0]);
+        }, ['kcal' => 0, 'protein' => 0, 'carb' => 0, 'fat' => 0, 'fiber' => 0 ]);
 
         // BMR és limit kiszámítása (kiszervezett metódus)
         $napiLimit = $this->calculateDailyLimit($data);
@@ -59,6 +60,7 @@ class DailyCalorieController extends Controller
             'osszFeherje'      => $totals['protein'],
             'osszSzenhidrat'   => $totals['carb'],
             'osszZsir'         => $totals['fat'],
+            'osszRost'         => $totals['fiber'],
             'foods'            => Food::all(),
             'consumedToday'    => $consumedToday
         ]);

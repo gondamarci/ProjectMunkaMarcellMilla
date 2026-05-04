@@ -12,9 +12,9 @@
     @endif
 
     <div class="card shadow border-0 overflow-hidden" style="border-radius: 15px;">
-        <div class="card-body p-0"> {{-- Mobile-on jobb, ha nincs extra padding a széleken --}}
+        <div class="card-body p-0"> 
             
-            <div class="table-wrapper"> {{-- Ez a CSS-edben lévő görgethető konténer --}}
+            <div class="table-wrapper"> 
                 <table class="table table-hover align-middle mb-0">
                     <thead class="bg-light">
                         <tr>

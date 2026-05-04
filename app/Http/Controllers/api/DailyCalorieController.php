@@ -14,10 +14,10 @@ class DailyCalorieController extends Controller
 {
     public function index()
     {
-        //Felhasználó ellenőrzése
+        // Felhasználó ellenőrzése
         $user = Auth::user();
 
-        //Ha a felhasználónak van personalData adatai akkor továbbengedi, ha nincs visszadob egy üzenetet
+        // Ha a felhasználónak van personalData adatai akkor továbbengedi, ha nincs visszadob egy üzenetet
         $data = $user->personalData;
         if(!$data){
             return response()->json([
@@ -28,7 +28,7 @@ class DailyCalorieController extends Controller
         // Aktuális súly lekérése
         $currentWeight = WeightLogController::currentWeight();
 
-        //Mai napon elfogyasztott kalóriák összeadása. (A sum után a function($log) bírálja el hogyan adjuk össze a táblázatot. A $log az bármi lehet csak változónév )
+        // Mai napon elfogyasztott kalóriák összeadása. (A sum után a function($log) bírálja el hogyan adjuk össze a táblázatot. A $log az bármi lehet csak változónév )
         $caloriesIn = $user->FoodLog()->whereDate('date', now())->get()->sum(function($log){
             return ($log->food->calories / 100) * $log->quantity;
         });
@@ -43,10 +43,10 @@ class DailyCalorieController extends Controller
         // Napi kalóriakeret meghatározása
         $tdeeTotal = round($bmr * (float)$data->lifestyle);
 
-        //Maradék kalória kiszámítása
+        // Maradék kalória kiszámítása
         $remaining = $tdeeTotal - $caloriesIn;
 
-        // Adatok visszaküldése JSON formátumban a MAUI appnak
+        // Adatok visszaküldése JSON formátumban
         return response()->json([
             'status' => 'success',
             'data' => [
@@ -68,7 +68,7 @@ class DailyCalorieController extends Controller
             'amount' => 'required|numeric|min:1',
         ]);
 
-        //Étel hozzáadása
+        // Étel hozzáadása
         $log = Foodlog::create([
             'userId' => Auth::id(),
             'foodId' => $validated['food_id'],
@@ -76,7 +76,7 @@ class DailyCalorieController extends Controller
             'date' => Carbon::today(),
         ]);
 
-        //adatok visszaküldése
+        // Adatok visszaküldése
         return response()->json([
             'success' => true,
             'message' => 'Étel rögzítve!',
@@ -144,7 +144,7 @@ class DailyCalorieController extends Controller
             'martial_arts' => 10, 
         ];
 
-        //Ha van ilyen type akkor annak a kcal, ha nincs alapértelmezett 5
+        // Ha van ilyen type akkor annak a kcal, ha nincs alapértelmezett 5
         $kcalPerMinute = $factors[$request->exercise_type] ?? 5;
 
         $exercise = Exercise::create([
@@ -165,7 +165,7 @@ class DailyCalorieController extends Controller
     // Étel törlése
     public function destroyFoodLog($id)
     {
-        //Megkeresi azt a Foodlog id-t ahol a userId egyezik a bejelentkezett felhasználó id-jával
+        // Megkeresi azt a Foodlog id-t ahol a userId egyezik a bejelentkezett felhasználó id-jával
         $log = Foodlog::where('userId', Auth::id())->find($id);
 
         if (!$log) {
@@ -186,7 +186,7 @@ class DailyCalorieController extends Controller
     // 5. Edzés törlése
     public function destroyExercise($id)
     {
-        //Megkeresi azt a Foodlog id-t ahol a userId egyezik a bejelentkezett felhasználó id-jával
+        // Megkeresi azt a Foodlog id-t ahol a userId egyezik a bejelentkezett felhasználó id-jával
         $exercise = Exercise::where('user_id', Auth::id())->find($id);
 
         if (!$exercise) {

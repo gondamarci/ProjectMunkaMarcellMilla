@@ -12,7 +12,7 @@ class ApiAdminController extends Controller
     // Összes felhasználó listázása adatokkal együtt
     public function userStats()
     {
-        // Csak admin férhet hozzá (biztonsági ellenőrzés az API-ban is)
+        // Csak admin férhet hozzá
         if (!Auth::user()->is_admin) {
             return response()->json([
                 'success' => false,
